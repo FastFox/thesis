@@ -1,0 +1,112 @@
+
+%First page for bachelor thesis at LIACS: bachelorpage.tex
+%Needed: unique serial number + date; name thesis and author
+%Version September 2010
+
+%Usage: 
+%  latex bachelorpage.tex
+%  dvips -Ppdf bachelorpage.dvi
+%  ps2pdf bachelorpage.ps
+%Needed: file ullogo.eps for the university logo
+%
+%  concatenate bachelorpage.pdf with yourthesis.pdf to yourfinalthesis.pdf by means of
+%  gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=yourfinalthesis.pdf bachelorpage.pdf yourthesis.pdf
+
+\documentclass[12pt]{article}
+
+
+\setlength{\textheight}{24.7cm}
+\setlength{\textwidth}{16cm}
+\setlength{\unitlength}{1mm}
+\setlength{\topskip}{1truecm}
+\topmargin 280mm \advance \topmargin -\textheight
+\divide \topmargin by 2 \advance \topmargin -1in
+\headheight 0pt \headsep 0pt
+\leftmargin 210mm \advance \leftmargin -\textwidth
+\divide \leftmargin by 2 \advance \leftmargin -1in
+\oddsidemargin \leftmargin \evensidemargin \leftmargin
+\parindent=0pt
+\frenchspacing
+\usepackage{graphicx}
+
+\begin{document}
+
+%No page number
+\thispagestyle{empty}
+
+\begin{large}
+
+%Logo Leiden University
+\vspace*{4mm}\hspace*{-13mm}\includegraphics{ullogo.eps}
+
+\vspace*{-3.5cm}
+
+\sf 
+
+%Ask for a unique serial number! And the date ...
+\hspace*{2.5cm}Internal Report 2010--number \hfill June 2013
+
+\vspace*{5mm}
+
+\begin{Huge}
+\hspace*{2.5cm}\textbf{Universiteit Leiden}
+
+\vspace*{8mm}
+
+\hspace*{2.5cm}\textbf{Opleiding Informatica \& Economie}
+\end{Huge}
+
+\vspace*{4.5cm}
+
+\begin{Large}
+%Here your title
+\hfill An Interesting Title
+
+\vspace*{3mm}
+
+\hfill for
+
+\vspace*{3mm}
+
+\hfill a Thesis
+
+\vspace*{4cm}
+
+%Here your name
+\hfill Michiel Vos
+
+\end{Large}
+
+\vspace*{3.5cm}
+
+\hspace*{2.5cm}BACHELOR THESIS
+
+\vspace*{5mm}
+
+\hspace*{2.5cm}Leiden Institute of Advanced Computer Science (LIACS)\\
+\hspace*{2.5cm}Leiden University\\
+\hspace*{2.5cm}Niels Bohrweg 1\\
+\hspace*{2.5cm}2333 CA Leiden\\
+\hspace*{2.5cm}The Netherlands\\
+\hspace*{2.5mm}\ 
+
+\end{large}
+
+\vspace*{-24.3cm}
+\begin{tabular}{p{1.5cm}|l}
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\\ &\ \\
+\ &\ \\\ &\ \\\ &\ \\
+\end{tabular}
+
+
+\end{document}
