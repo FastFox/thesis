@@ -1,5 +1,23 @@
 \section{Experiments}
 	\subsection{Beddit versus Bioharness}
-		hi
+		\subsubsection{General}
+			Why - to have a baseline and to know if the devices measure the same thing. To check if it's possible to combine the data.
+			What - Heart rate, breath rate, activity
+		\subsubsection{Comparison}
+			Beddit on and BioHarness on during two nights.
+			Beddit does not have a constant Hz. Sum all data of heart beats in a minute and divide by total, to get average ihr of the minute. 
+			Bioharness needs to convert from seconds to minutes. To the same for breath rate. 
+			Beddit activity and BioHarness activity are different things, so standarize.
+
+		\subsubsection{Results}
+			HR is correlated 0.95 when moving average is used.
+			BR is 0.3?, very low. They are measering something else.
+			Activity has some patterns, but is not measurable in terms of correlation.
 	\subsection{Data collection}
-		hi
+		\subsubsection{Setup}
+			\paragraph{Beddit}
+				Beddit starts at 21:30 till 11:00 next day. 
+			\paragraph{BioHarness}
+				After waking up, turn pc on, extract data from BioHarness. Go showering, breakfast and put BioHarness on when extracting is done. Before showering off, after showering on. Before sleeping, connect to pc to recharge. 
+			\paragraph{Openbeacon}
+				Openbeacon is always on, but the tracking script not. I'm starting the script after waking up, turn it of when I'm leaving the house, turn it on whem I'm coming home, and turn it off when I'm going to sleep. The tags are placed at x, y, z and the tag I'm wearing is 1042. 
