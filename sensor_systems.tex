@@ -1,0 +1,39 @@
+\section{Sensor systems}
+	\subsection{BioHarness}
+		\subsubsection{General}
+			http://www.zephyr-technology.com/products/bioharness-3/	
+			The Zephyr Bioharness 3 \cite{bioharness} is a physiolocigal monitoring device, which is attached to a strap on the chest. There are several practical uses for this device - medical patients who need health care but wants to live at home, sporters who would like to track their progress or for trainers to find out who is tired and up for substitution during a match.
+			- Chilean Mineworkers who were trapped underground were remotedly monitored and resulted in a better rescue order and better health care after when the miners work above ground.
+			- Researchers like me can use the data.
+			The price is 472 dollar.
+		
+	http://www.panasonic.com/business-solutions/government-case-study-chilean-miners.asp	
+		\subsubsection{Description}
+			heart rate, R-R interval, breathing rate, ECG, postsure, activity, acceleration
+
+			hi
+		\subsubsection{Format}
+		The data in in a csv file and is an 2D array, for every session a csv file.
+		Timestamp,HR,BR,Temp,Posture,Activity,Acceleration,Battery,BRAmplitude,ECGAmplitude,ECGNoise,XMin,XPeak,YMin,YPeak,ZMin,ZPeak
+	\subsection{Beddit}
+		\subsubsection{General}
+			The Beddit Sleep Tracker is a placed next to your bed and connected with a sensor between the sheets and the mattress. The makers of Beddit thinks sleep is important, because a human is sleeping one third of his live. Better sleep results in a better life quality. Why not measure it to help improve our sleep quality? 
+			The price is 395 euro
+			\subsubsection{Description}
+				Respiration, presence, ihr, actigram, noise, luminosity, temperature, sleep stages, 
+			\subsection{Format}
+			Per day there are two JSON files.
+			\begin{algorithm}
+				\SetAlgoLined
+				hi\;
+				bla next
+			\end{algorithm}
+	\subsection{Openbeacon}
+		\subsubsection{General}
+			The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Eeach tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags has a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments.
+		\subsubsection{Description}
+
+		\subsubsection{Format}
+		The data is stored in a MongoDB in the following format:
+		Tags: ID, Timestamp
+		Edges: Timestamp, Tag1, Tag2

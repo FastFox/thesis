@@ -29,6 +29,12 @@
 \frenchspacing
 \usepackage{graphicx}
 
+\usepackage{algorithm2e}
+
+\usepackage{biblatex}
+\bibliography{thesis}
+
+
 \begin{document}
 
 %No page number
@@ -44,7 +50,7 @@
 \sf 
 
 %Ask for a unique serial number! And the date ...
-\hspace*{2.5cm}Internal Report 2010--number \hfill June 2013
+\hspace*{2.5cm}Internal Report 2013--number \hfill June 2013
 
 \vspace*{5mm}
 
@@ -60,15 +66,15 @@
 
 \begin{Large}
 %Here your title
-\hfill An Interesting Title
+\hfill Datamining 
 
 \vspace*{3mm}
 
-\hfill for
+\hfill with Physiological Data
 
 \vspace*{3mm}
 
-\hfill a Thesis
+\hfill from Multiple Sensor Systems
 
 \vspace*{4cm}
 
@@ -108,5 +114,15 @@
 \ &\ \\\ &\ \\\ &\ \\
 \end{tabular}
 
+\include{abstract}
+
+\tableofcontents
+
+\include{introduction}
+\include{sensor_systems}
+\include{experiments}
+\include{conclusion}
+
+\printbibliography
 
 \end{document}
