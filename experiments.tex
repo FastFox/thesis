@@ -21,3 +21,13 @@
 				After waking up, turn pc on, extract data from BioHarness. Go showering, breakfast and put BioHarness on when extracting is done. Before showering off, after showering on. Before sleeping, connect to pc to recharge. 
 			\paragraph{Openbeacon}
 				Openbeacon is always on, but the tracking script not. I'm starting the script after waking up, turn it of when I'm leaving the house, turn it on whem I'm coming home, and turn it off when I'm going to sleep. The tags are placed at x, y, z and the tag I'm wearing is 1042. 
+		\subsubsection{Problems}
+			Beddit: strap chances position. Doesn't cover whole bed. 
+			Openbeacon: At first we had two devices and then it covers my whole house, but one device stopped working. I takes a moment to get an edge between two tags. A few minutes are missing because of starting laptop after wake up, coming home and leaving home. Need to wear a tag everytime. 
+			Bioharness: Takes 40 minutes to upload data from device to pc, I haven't wear it in the shower. Missing some minutes while washing the strap of the device. Chances position. 
+		\subsubsection{Combining data}
+			Difficult because of the differnet devices has different frequenties, different data format/extraction. 
+			Dataset, every second from start till end is a row. BioHarness already gives an 1Hz dataset, so fill in the values if BioHarness is on. 
+			Openbeacon is 4Hz and can easily converted to 1Hz.
+			Beddit is difficult, soms attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all.
+			

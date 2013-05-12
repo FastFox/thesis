@@ -5,3 +5,6 @@
 *.blg
 *.run.xml
 *.toc
+*.swp
+*.pdf
+*.dvi
