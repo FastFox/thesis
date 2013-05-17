@@ -1,0 +1,59 @@
+{
+	"local_start_time": "2012-03-13T21:00:00",
+	"local_end_time": "2012-03-14T10:00:00",
+	"stress_percent": 73,
+	"time_in_bed": 32292, // These summary times are seconds
+	"time_light_sleep": 21064,
+	"time_sleeping": 31406,
+	"time_deep_sleep": 10342,
+	"sleep_efficiency": 97.2562863867, // Percent of time in bed slept
+	"resting_heartrate": 53.2544378696,
+	"minutely_actigram": [
+		0,
+		2,
+		...
+		// Rest of the actigram. An integer value for each minute
+		// between the night start time and night end time. Basically,
+		// it's the number of movements occurred.
+	]
+	"noise_measurements": [
+		[
+			[	
+				"2012-03-13T21:00:10",
+				43.0 // Maximum noise value in dB
+			],
+			... // Array of arrays of noise measurements
+		]
+	],
+	"luminosity_measurements": [
+		[
+			[
+				"2012-03-13T21:00:10",
+				0.0
+			],
+			... // Rest of the luminosity measurements in Lux
+		]
+	],
+	"sleep_stages": [
+		[
+			"2012-03-13T21:00:00",
+			"A" // Away
+		],
+		[
+			"2012-03-13T23:17:00",
+			"W" // Wake
+		],
+		[
+			"2012-03-13T23:25:06",
+			"L" // Light sleep
+		],
+		[
+			"2012-03-13T23:56:00",
+			"D" // Deep sleep
+		],
+		[
+			"2012-03-13T23:58:00",
+			"M" // Data is missing
+		],
+		... // Rest of the sleep stages
+}

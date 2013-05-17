@@ -23,11 +23,14 @@
 				Respiration, presence, ihr, actigram, noise, luminosity, temperature, sleep stages, 
 			\subsubsection{Format}
 			Per day there are two JSON files.
-			\begin{algorithm}
-				\SetAlgoLined
-				hi\;
-				bla next
-			\end{algorithm}
+			\lstset { 
+				basicstyle = \footnotesize,
+				tabsize = 2
+			}
+			\lstinputlisting[caption=Sleep]{beddit.listing}
+			\lstinputlisting[caption=Results]{beddit2.listing}
+
+
 	\subsection{Openbeacon}
 		\subsubsection{General}
 			The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Eeach tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags has a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments.

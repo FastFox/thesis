@@ -1,0 +1,61 @@
+{
+	"interval_start": "2012-03-13T21:00:00",
+	"interval_end": "2012-03-14T10:00:00",
+	"analysis_complete": true,
+	"percent_analyzed": 100.0,
+	"last_analysis_end_time": "2012-03-14T09:59:52","percent_signal_covarage": 100.0,
+	"respiration": [
+		[
+			8271.24, // Timestamp, seconds since interval_start
+			"bcg", // Channel (there may be several in some sensors)
+			3.5, // The length of the respiration cycle measured i
+					// from minimum to minimum
+		3.45, // The length of the respiration cycle measured
+					// from maximum to maximum
+		532.504712648 // The amplitude of the respiration cycle
+		],
+		[
+			8317.84,
+			"bcg",
+			3.25,
+			3.05,
+			544.509827026
+		],
+		... // Rest of the respiration results
+	],
+	"presence": [
+		[
+			0.0, // Timestamp, seconds since interval_start
+			0
+			// 1 if person is present in bed, otherwise 0
+		],
+		[
+			8220.0,
+			1
+		],
+		[
+			40512.0,
+			0
+		],
+		... // Rest of the presence data...
+	],
+	// Instant heart rate, i.e. bpm computed from interval between two
+	// single heart beats (not averaged)
+	"ihr": [
+		[
+			8245.396667, // Timestamp, seconds since interval_start
+			71.1462450595 // Instant heart rate value
+		],
+		[
+			8246.24,
+			75.9493670885
+		],... // Rest of the instant heart rate data
+	],
+	// Actigram, zero-crossing mode
+	// Basically, it means the times of movements above certain threshold
+	"binary_actigram": [
+		8220.0, // Timestamp, seconds since interval_start
+		8223.0,
+		... // Rest of the binary actigram data
+	]
+}
