@@ -1,28 +1,39 @@
 \section{Sensor systems}
 	\subsection{BioHarness}
-		\subsubsection{General}
-			http://www.zephyr-technology.com/products/bioharness-3/	
-			The Zephyr Bioharness 3 \cite{bioharness} is a physiolocigal monitoring device, which is attached to a strap on the chest. There are several practical uses for this device 
+			The Zephyr Bioharness 3 \cite{bioharness} is a physiolocigal monitoring device, which is attached to a strap on the chest. There are several practical uses for this device.
 			\begin{itemize}
-				\item Medical patients who need health care but wants to live at home, in combination with ZephyrLIFE \texttrademark \cite{bhpatients}
+				\item Remote patient monitoring. Medical patients who need health care but wants to live at home, in combination with ZephyrLIFE \texttrademark \cite{bhpatients}
 				\item Sporters who would like to track their progress 
 				\item For coaches to find out who is tired and up for substitution during a match. \cite{bhsport}
 				\item In 2010 Chilean mineworkers who were trapped underground were remotedly monitored which resulted in a better rescue order and better health care after when the miners work above ground. \cite{chile}
 				\item Researchers like me can use the data.
 			\end{itemize}
+			It takes around 40 minutes to download the log file from the device to a computer. \cite{bhdatasheet} The data and derivates of data are stored in a folder per session and within the folder different csv files. The strap on the chest changes position and incorrent use of the strap results in wrong sensor responses.
 			The price is 472 dollar.
 		
-		\subsubsection{Description}
-			heart rate, R-R interval, breathing rate, ECG, postsure, activity, acceleration
+			The accelerometer measures the physical acceleration of the user in the x-, y- and z-axis.. $m/s^2$ is a unit of $g$. The sampling rate is 100 Hz\footnote{Hz stands for hertz and is defined as the number of cycles per second.}. The range is from $-16g$ to $+16g$.
 
-			hi
-		\subsubsection{Format}
+			The breathing sensor measures the pressure of the chest to the sensor. If the pressure is above a certain threshold it will count as a breath taken. The breath rate is the amount of breaths taken in a minute (BPM\footnote{Beats Per Minute}. The sampling frequency is 25 Hz and the ranges is from 0 to 120.
+
+			The electrocardiography (ECG) sensor measures the electrical activity of the heart.\cite{ECG} See Figure 1. for a graph of the results an ECG procudes. The sampling frequency is 1000 Hz.
+
+			% R-R: 250 - 1500 ms, 25 Hz
+
+			% heart rate, R-R interval, breathing rate, ECG, postsure, activity, acceleration
+
 		The data in in a csv file and is an 2D array, for every session a csv file.
-		Timestamp,HR,BR,Temp,Posture,Activity,Acceleration,Battery,BRAmplitude,ECGAmplitude,ECGNoise,XMin,XPeak,YMin,YPeak,ZMin,ZPeak
+		%Timestamp,HR,BR,Temp,Posture,Activity,Acceleration,Battery,BRAmplitude,ECGAmplitude,ECGNoise,XMin,XPeak,YMin,YPeak,ZMin,ZPeak
 	\subsection{Beddit}
 		\subsubsection{General}
-			The Beddit Sleep Tracker is a placed next to your bed and connected with a sensor between the sheets and the mattress. The makers of Beddit thinks sleep is important, because a human is sleeping one third of his live. Better sleep results in a better life quality. Why not measure it to help improve our sleep quality? 
-			The price is 395 euro
+		The Beddit Sleep Tracker is placed next to your bed and connected with a sensor between the sheets and the mattress. The makers of Beddit thinks sleep is important, because a human is sleeping one third of his live. Better sleep results in a better life quality. Why not measure it to help improve our sleep quality? The sensor is moving position over time, but can be solved to reposition every few days. The sensor is about \SI{70}{\centi\metre} long and \SI{4}{\centi\metre} wide and it's possible it will not cover the whole bed. 
+			The price is 395 euro.
+
+			The ballistocardiogram (BCG) measures (micro)movements of the body.\cite{beddit}
+			BCG is convenient in use, because you don't notice it's measuring, but the disadvantage (compared to ECG) it's not only measuring cardiac activity, but also body movements, like tossing and turning, which could also be an advantage.\cite{bcg} The sampling frequency is \SI{140}{\hertz}. The devices also measures the room temperature (\SI{}{\celsius}), ambient noise level (\SI{}{\decibel}) and brightness (\SI{}{\lux}), once per 5 minutes.\cite{bedditapi}
+
+
+
+
 			\subsubsection{Description}
 				Respiration, presence, ihr, actigram, noise, luminosity, temperature, sleep stages, 
 			\subsubsection{Format}
@@ -37,7 +48,7 @@
 
 	\subsection{Openbeacon}
 		\subsubsection{General}
-			The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Eeach tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags has a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments.
+			RFID stands for Radio-frequency identification and is a technology to communicate wireless using tags. The OpenBeacon ethernet EasyReader PoE II (called OpenBeacon from now) can receive and send signals with those tags. There're two kind of tags, active and passive ones. Active tags are powered by a battery and can broadcast their signal. Passive tags don't have batteries and are powered by the energy received wireless from the OpenBeacon, only when they're in range. The tags of the Openbeacon are active tags and can communicate with each other. The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Each tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags have a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments.
 		\subsubsection{Description}
 		timestamp, tag1, tag2, power level
 
