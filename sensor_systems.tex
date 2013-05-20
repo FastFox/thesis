@@ -1,6 +1,6 @@
 \section{Sensor systems}
 	\subsection{BioHarness}
-			The Zephyr Bioharness 3 \cite{bioharness} is a physiolocigal monitoring device, which is attached to a strap on the chest. There are several practical uses for this device.
+			The Zephyr Bioharness 3\cite{bioharness} is a physiolocigal monitoring device, which is attached to a strap on the chest. There are several practical uses for this device.
 			\begin{itemize}
 				\item Remote patient monitoring. Medical patients who need health care but wants to live at home, in combination with ZephyrLIFE \texttrademark \cite{bhpatients}
 				\item Sporters who would like to track their progress 
@@ -24,35 +24,38 @@
 		The data in in a csv file and is an 2D array, for every session a csv file.
 		%Timestamp,HR,BR,Temp,Posture,Activity,Acceleration,Battery,BRAmplitude,ECGAmplitude,ECGNoise,XMin,XPeak,YMin,YPeak,ZMin,ZPeak
 	\subsection{Beddit}
-		\subsubsection{General}
+		%\subsubsection{General}
 		The Beddit Sleep Tracker is placed next to your bed and connected with a sensor between the sheets and the mattress. The makers of Beddit thinks sleep is important, because a human is sleeping one third of his live. Better sleep results in a better life quality. Why not measure it to help improve our sleep quality? The sensor is moving position over time, but can be solved to reposition every few days. The sensor is about \SI{70}{\centi\metre} long and \SI{4}{\centi\metre} wide and it's possible it will not cover the whole bed. 
 			The price is 395 euro.
 
 			The ballistocardiogram (BCG) measures (micro)movements of the body.\cite{beddit}
 			BCG is convenient in use, because you don't notice it's measuring, but the disadvantage (compared to ECG) it's not only measuring cardiac activity, but also body movements, like tossing and turning, which could also be an advantage.\cite{bcg} The sampling frequency is \SI{140}{\hertz}. The devices also measures the room temperature (\SI{}{\celsius}), ambient noise level (\SI{}{\decibel}) and brightness (\SI{}{\lux}), once per 5 minutes.\cite{bedditapi}
 
+			The data is stored in two json\footnote{JSON stands for JavaScript Object Notation and is a format to exchange data between different softare environments.\cite{json}} files per session (night).
 
 
 
-			\subsubsection{Description}
-				Respiration, presence, ihr, actigram, noise, luminosity, temperature, sleep stages, 
-			\subsubsection{Format}
-			Per day there are two JSON files.
-			\lstset { 
-				basicstyle = \footnotesize,
-				tabsize = 2
-			}
+
+
+		%\subsubsection{Description}
+		%		Respiration, presence, ihr, actigram, noise, luminosity, temperature, sleep stages, 
+		% \subsubsection{Format}
+		%	Per day there are two JSON files.
+		%	\lstset { 
+		%		basicstyle = \footnotesize,
+		%		tabsize = 2
+		%	}
 			%\lstinputlisting[caption=Sleep]{beddit.listing}
 			%\lstinputlisting[caption=Results]{beddit2.listing}
 
 
 	\subsection{Openbeacon}
-		\subsubsection{General}
-			RFID stands for Radio-frequency identification and is a technology to communicate wireless using tags. The OpenBeacon ethernet EasyReader PoE II (called OpenBeacon from now) can receive and send signals with those tags. There're two kind of tags, active and passive ones. Active tags are powered by a battery and can broadcast their signal. Passive tags don't have batteries and are powered by the energy received wireless from the OpenBeacon, only when they're in range. The tags of the Openbeacon are active tags and can communicate with each other. The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Each tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags have a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments.
-		\subsubsection{Description}
-		timestamp, tag1, tag2, power level
+		%\subsubsection{General}
+			RFID stands for Radio-frequency identification and is a technology to communicate wireless using tags. The OpenBeacon Ethernet EasyReader PoE II (called OpenBeacon from now) can receive and send signals with those tags (See figure x for an example). There're two kind of tags, active and passive ones. Active tags are powered by a battery and can broadcast their signal. Passive tags don't have batteries and are powered by the energy received wireless from the OpenBeacon, but only when they're in range. The tags of the Openbeacon are active tags and can communicate with each other. The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Each tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags have a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments\cite{2008arXiv0811.4170B}.
+		%\subsubsection{Description}
+		%timestamp, tag1, tag2, power level
 
-		\subsubsection{Format}
-		The data is stored in a MongoDB in the following format:
-		Tags: ID, Timestamp
-		Edges: Timestamp, Tag1, Tag2
+		%\subsubsection{Format}
+		%The data is stored in a MongoDB in the following format:
+		%Tags: ID, Timestamp
+		%Edges: Timestamp, Tag1, Tag2
