@@ -5,14 +5,16 @@
 			Activity from acceleratometer? range 16 VMU (g).
 			Posture -/+ 180 degrees. 0 degree is vertical, inverted = 180 degree, also from acceleratometer?
 			Breath rate from the breath sensor. 
-			The relative slow transfer rate from the device to the pc can be explained by the calculating/generation of the new data.
+			The relative slow transfer rate from the device to the pc can be explained by the calculating/generation/computing of the new data.
+			The sampling frequency from the csv files is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
-			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration and the activity from the BCG. When everything is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing".
+			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing". Beddit don't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the bpm computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every second 
+
 		\subsubsection{OpenBeacon}
 			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is counterpart of relational database. One argument to use it is because it's more flexible.} database MongoDB.
 			There are two collections. The collection tags, within documents with the format ID, timestamp. For every second the OpenBeacon sees a tag, a document will be added.
 			The second collection is edges. For every second the OpenBeacon sees and edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
-			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could inference the power level. For example walls and other communication on the 2,4G frequency.
+			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
 	\subsection{Beddit versus Bioharness}
 		\subsubsection{General}
 			Why - to have a baseline and to know if the devices measure the same thing. To check if it's possible to combine the data.
