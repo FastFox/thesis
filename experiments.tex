@@ -1,8 +1,18 @@
 \section{Experiments}
 	\subsection{Data description}
 		\subsubsection{BioHarness}
+			From the data produced by the sensors more data can be derived. The heart rate is the amount of beats per minute and can be derived from the ECG.  
+			Activity from acceleratometer? range 16 VMU (g).
+			Posture -/+ 180 degrees. 0 degree is vertical, inverted = 180 degree, also from acceleratometer?
+			Breath rate from the breath sensor. 
+			The relative slow transfer rate from the device to the pc can be explained by the calculating/generation of the new data.
 		\subsubsection{Beddit}
-		\subsubsection{Openbeacon}
+			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration and the activity from the BCG. When everything is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing".
+		\subsubsection{OpenBeacon}
+			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is counterpart of relational database. One argument to use it is because it's more flexible.} database MongoDB.
+			There are two collections. The collection tags, within documents with the format ID, timestamp. For every second the OpenBeacon sees a tag, a document will be added.
+			The second collection is edges. For every second the OpenBeacon sees and edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
+			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could inference the power level. For example walls and other communication on the 2,4G frequency.
 	\subsection{Beddit versus Bioharness}
 		\subsubsection{General}
 			Why - to have a baseline and to know if the devices measure the same thing. To check if it's possible to combine the data.
@@ -24,6 +34,7 @@
 			\paragraph{BioHarness}
 				After waking up, turn pc on, extract data from BioHarness. Go showering, breakfast and put BioHarness on when extracting is done. Before showering off, after showering on. Before sleeping, connect to pc to recharge. 
 			\paragraph{Openbeacon}
+		 		In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. 
 				Openbeacon is always on, but the tracking script not. I'm starting the script after waking up, turn it of when I'm leaving the house, turn it on whem I'm coming home, and turn it off when I'm going to sleep. The tags are placed at x, y, z and the tag I'm wearing is 1042. 
 		\subsubsection{Problems}
 			Beddit: strap chances position. Doesn't cover whole bed. 
@@ -33,5 +44,5 @@
 			Difficult because of the differnet devices has different frequenties, different data format/extraction. 
 			Dataset, every second from start till end is a row. BioHarness already gives an 1Hz dataset, so fill in the values if BioHarness is on. 
 			Openbeacon is 4Hz and can easily converted to 1Hz.
-			Beddit is difficult, soms attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
+			Beddit is difficult, some attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
 		

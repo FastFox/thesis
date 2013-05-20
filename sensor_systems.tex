@@ -21,7 +21,7 @@
 
 			% heart rate, R-R interval, breathing rate, ECG, postsure, activity, acceleration
 
-		The data in in a csv file and is an 2D array, for every session a csv file.
+			The data in stored in a csv file and is an 2D array, for every session a csv file. it's resampled to \SI{1}{Hertz}.
 		%Timestamp,HR,BR,Temp,Posture,Activity,Acceleration,Battery,BRAmplitude,ECGAmplitude,ECGNoise,XMin,XPeak,YMin,YPeak,ZMin,ZPeak
 	\subsection{Beddit}
 		%\subsubsection{General}
@@ -51,7 +51,7 @@
 
 	\subsection{Openbeacon}
 		%\subsubsection{General}
-			RFID stands for Radio-frequency identification and is a technology to communicate wireless using tags. The OpenBeacon Ethernet EasyReader PoE II (called OpenBeacon from now) can receive and send signals with those tags (See figure x for an example). There're two kind of tags, active and passive ones. Active tags are powered by a battery and can broadcast their signal. Passive tags don't have batteries and are powered by the energy received wireless from the OpenBeacon, but only when they're in range. The tags of the Openbeacon are active tags and can communicate with each other. The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Each tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags have a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments\cite{2008arXiv0811.4170B}.
+			RFID stands for Radio-frequency identification and is a technology to communicate wireless using tags. The OpenBeacon Ethernet EasyReader PoE II (called OpenBeacon from now) can receive and send signals with those tags (See figure x for an example). There're two kind of tags, active and passive ones. Active tags are powered by a battery and can broadcast their signal. Passive tags don't have batteries and are powered by the energy received wireless from the OpenBeacon, but only when they're in range. The tags of the Openbeacon are active tags and can communicate with each other. The OpenBeacon Ethernet EasyReader PoE II can identify RFID tags and edges between the tags. Each tag has it's own ID and each edge has a power level. The price of 100 RFID tags is 1575.75 euro and the EasyReader costs 184.87 euro. RFID tags have a lot of applications, like: anti-theft on clothing, as access key pas to enter buildings, track and trace of goods while transporting, social experiments\cite{2008arXiv0811.4170B}. The OpenBeacon produces JSON.
 		%\subsubsection{Description}
 		%timestamp, tag1, tag2, power level
 
