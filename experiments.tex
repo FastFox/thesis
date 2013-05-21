@@ -8,11 +8,11 @@
 			The relative slow transfer rate from the device to the pc can be explained by the calculating/generation/computing of the new data.
 			The sampling frequency from the csv files is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
-			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing". Beddit don't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the bpm computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every second 
+			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing". Beddit don't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively \SI{}{\celsius}, \SI{}{\decibel} and \SI{}{\lux} or celsius, decibel and lux(?).
 
 		\subsubsection{OpenBeacon}
-			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is counterpart of relational database. One argument to use it is because it's more flexible.} database MongoDB.
-			There are two collections. The collection tags, within documents with the format ID, timestamp. For every second the OpenBeacon sees a tag, a document will be added.
+			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB.
+			There are two collections. The collection tags, within documents with the format tag ID, timestamp\footnote{Amount of seconds since 00:00:00 GMT January 1, 1970 (the UNIX epoch)} . For every second the OpenBeacon sees a tag, a document will be added.
 			The second collection is edges. For every second the OpenBeacon sees and edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
 			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
 	\subsection{Beddit versus Bioharness}
@@ -29,14 +29,24 @@
 			HR is correlated 0.95 when moving average is used.
 			BR is 0.3?, very low. They are measering something else.
 			Activity has some patterns, but is not measurable in terms of correlation.
+
+
+
 	\subsection{Data collection}
 		\subsubsection{Setup}
 			\paragraph{Beddit}
-				Beddit starts at 21:30 till 11:00 next day. 
+				The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring I've download for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I receive an e-mail and I visited the website to see if everything is logged alright.
 			\paragraph{BioHarness}
-				After waking up, turn pc on, extract data from BioHarness. Go showering, breakfast and put BioHarness on when extracting is done. Before showering off, after showering on. Before sleeping, connect to pc to recharge. 
+				When I wake up, I start my PC and the BioHarness Log Downloader. After about 40 minutes I've took a shower and had breakfast, the Log Downloader is ready. I put the strap on my chest with the device and turn it on. After sport I take a shower and put it off and after shower again on. The device is water resistance up to one meter, but it takes a while for the strap to get dry. Right before I go to bed I connect the device to the PC so it's recharged again the next day. So I'm missing a few minutes data every day because of the Log Downloader and the showering. 
 			\paragraph{Openbeacon}
-		 		In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. 
+		 		In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were wearing also a tag. If there was an edge between my tag and the tag dining room, my location was the dining room etc. The OpenBeacon was always on, but the script to capture the JSON output and storage it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was turned off and when I came back home I turned the script on right away. There's a few minutes missing data every day. For example, I'm late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag etc, without wearing my tag, because the script was not running. Of course the script turned off before going to bed.
+				So now we have the data of a few locations were I was at a certain time, but we can extract more locations with some tricks. 
+
+				\input{decisiontree}
+				
+
+
+
 				Openbeacon is always on, but the tracking script not. I'm starting the script after waking up, turn it of when I'm leaving the house, turn it on whem I'm coming home, and turn it off when I'm going to sleep. The tags are placed at x, y, z and the tag I'm wearing is 1042. 
 		\subsubsection{Problems}
 			Beddit: strap chances position. Doesn't cover whole bed. 
