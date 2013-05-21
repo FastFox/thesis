@@ -1,70 +1,120 @@
+\tikzset{
+    every node/.style={
+        font=\scriptsize
+    },
+    decision/.style={
+        shape=rectangle,
+        minimum height=1cm,
+        text width=2cm,
+        text centered,
+        rounded corners=1ex,
+        draw,
+        label={[yshift=0.125cm]left:yes},
+        label={[yshift=0.125cm]right:no},
+    },
+    outcome/.style={
+        shape=ellipse,
+        fill=gray!15,
+        draw,
+        text width=1.5cm,
+        text centered
+    },
+    decision tree/.style={
+        edge from parent path={[-latex] (\tikzparentnode) -| (\tikzchildnode)},
+        sibling distance=3cm,
+        level distance=1.5cm
+    }
+}
+
+
+\begin{tikzpicture}
+
+\node [decision] { Any edge with my tag? }
+    [decision tree]
+    child { node [outcome, yshift=-0.8cm, text width=2cm] { Dining room,\\ toilet ground floor, kitchen,\\ living room, hall first floor } }
+		child { node [decision, xshift=2.0cm] { Beddit presence } 
+        child { node [outcome] { in bed } }
+        child { node [decision, xshift=2.0cm] { Script is running } 
+    				[decision tree, level distance=3.0cm]
+            child { node [decision] { My tag is in range of the reader } }
+        				child { node [outcome, yshift=-5.0cm] { Rest of the house } }
+        			%child { node [outcome] { Room } }
+            child { node [outcome, xshift=1.0cm] { Out of the house } }
+        }
+    };
+
+\end{tikzpicture}
+
 \begin{tikzpicture}[
-% Gates and symbols style
-    and/.style={and gate US,thick,draw,fill=red!60,rotate=90,
-		anchor=east,xshift=-1mm},
-    or/.style={or gate US,thick,draw,fill=blue!60,rotate=90,
-		anchor=east,xshift=-1mm},
-    be/.style={circle,thick,draw,fill=green!60,anchor=north,
-		minimum width=0.7cm},
-    tr/.style={buffer gate US,thick,draw,fill=purple!60,rotate=90,
-		anchor=east,minimum width=0.8cm},
-% Label style
-    label distance=3mm,
-    every label/.style={blue},
-% Event style
-    event/.style={rectangle,thick,draw,fill=yellow!20,text width=2cm,
-		text centered,font=\sffamily,anchor=north},
-% Children and edges style
-    edge from parent/.style={very thick,draw=black!70},
-    edge from parent path={(\tikzparentnode.south) -- ++(0,-1.05cm)
-			-| (\tikzchildnode.north)},
-    level 1/.style={sibling distance=7cm,level distance=1.4cm,
-			growth parent anchor=south,nodes=event},
-    level 2/.style={sibling distance=7cm},
-    level 3/.style={sibling distance=6cm},
-    level 4/.style={sibling distance=3cm}
-%%  For compatability with PGF CVS add the absolute option:
-%   absolute
-    ]
-%% Draw events and edges
-    \node (g1) [event] {No flow to receiver}
-	     child{node (g2) {No flow from Component B}   
-	     	child {node (g3) {No flow into Component B}
-	     	   child {node (g4) {No flow from Component A1}
-	     	      child {node (t1) {No flow from source1}}
-	     	      child {node (b2) {Component A1 blocks flow}}
+ test/.style={
+ % Node style
+ %diamond, 
+rectangle,
+ aspect=2.5,
+ very thick,
+ draw=black,
+ fill=gray!20,
+ text width=2.0cm,
+ align=center, 
+ anchor=north},
+ dec/.style={
+ %rectangle,
+	ellipse,
+ very thick,
+ draw=black,
+ fill=gray!50,
+ text width=2cm,
+ text centered, 
+ anchor=north
+ },
+ % Children and edges style
+ edge from parent/.style={
+ very thick,
+ draw=black},
+ edge from parent fork down,
+ level 1/.style={
+ sibling distance=8cm,
+ level distance=2cm},
+ level 2/.style={
+		sibling distance=4cm,
+		level distance=2cm
+ 	}
+ ]
+
+\node 
+(t1) [test] {Any edge with my tag?\\A} 
+	child { 
+		node (t2) [test] {Check\\B} 
+		child { 
+			node (t3) [test] {Check\\C} 
+			child { 
+				node (t4) [test] {Check\\D}
+				edge from parent node [above] {reject C}
 			}
-	     	   child {node (g5) {No flow from Component A2}
-	     	      child {node (t2) {No flow from source2}}
-	     	      child {node (b3) {Component A2 blocks flow}}
+ 			child { 
+				node (d3) [dec] {decision 3}
+				edge from parent node [above] {accept C}
 			}
-		   }
-	     	child {node (b1) {Component B blocks flow}}
-		};
-%% Place gates and other symbols
-%% In the CVS version of PGF labels are placed differently than in PGF 2.0
-%% To render them correctly replace '-20' with 'right' and add the 'absolute'
-%% option to the tikzpicture environment. The absolute option makes the 
-%% node labels ignore the rotation of the parent node. 
-   \node [or]	at (g2.south)	[label=-20:G02]	{};
-   \node [and]	at (g3.south)	[label=-20:G03]	{};
-   \node [or]	at (g4.south)	[label=-20:G04]	{};
-   \node [or]	at (g5.south)	[label=-20:G05]	{};
-   \node [be]	at (b1.south)	[label=below:B01]	{};
-   \node [be]	at (b2.south)	[label=below:B02]	{};
-   \node [be]	at (b3.south)	[label=below:B03]	{};
-   \node [tr]	at (t1.south)	[label=below:T01]	{};
-   \node [tr]	at (t2.south)	[label=below:T02]	{};
-%% Draw system flow diagram
-   \begin{scope}[xshift=-7.5cm,yshift=-5cm,very thick,
-		node distance=1.6cm,on grid,>=stealth',
-		block/.style={rectangle,draw,fill=cyan!20},
-		comp/.style={circle,draw,fill=orange!40}]
-   \node [block] (re)					{Receiver};
-   \node [comp]	 (cb)	[above=of re]			{B}  edge [->] (re);
-   \node [comp]	 (ca1)	[above=of cb,xshift=-0.8cm]	{A1} edge [->] (cb);
-   \node [comp]	 (ca2)	[right=of ca1]			{A2} edge [->] (cb);
-   \node [block] (s1)	[above=of ca1]		{Source1} edge [->] (ca1);
-   \node [block] (s2)	[right=of s1]		{Source2} edge [->] (ca2);
-   \end{scope}
+ 			edge from parent node[above] {reject B}
+ 		}
+ 		child { 
+			node (d1) [dec] {decision 2} 
+			edge from parent node[above] {accept B}
+		}
+	 	edge from parent node[above] {reject A}
+ 	}
+ 	child { 
+		node (t5) [test] {Check\\E} 
+			child {
+				node (d4) [dec] {decision 4}
+				edge from parent node [above] {Reject E}
+			}
+			child {
+				node (d5) [dec] {decision 5}
+				edge from parent node [above] {Accept E}
+			}
+		edge from parent node [above] {Accept A} 
+	}
+ %child{ node (d1) [dec] {decision 1} edge from parent node[above] {accept A} } %
+;
 \end{tikzpicture}
