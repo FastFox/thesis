@@ -1,0 +1,113 @@
+\pagebreak
+
+\lstset{
+	language=Python,
+	numbers=left,
+	numberstyle=\tiny,
+	frame=tb,
+	basicstyle=\small,
+	tabsize=2,
+}
+\begin{lstlisting}[caption=Pseudocode]
+// Initializing
+data = []
+begin = 10 April 2013 08:43:01
+end = 25 April 2013 08:52:35
+for every second from begin to end:
+	data[second] = {}
+
+// Reading
+for every day:
+	// Beddit
+	beddit = readBedditFiles(day)
+	for 'presence', 'respiration', 'ihr', 'sleep stage', 'noise',
+		'luminosity', 'temperature', 'minutely actigram' as attribute:
+		for every attribute in beddit as value:
+			timestamp = convertToTimestamp(value)
+			data[timestamp]['beddit' + attribute] = value
+
+	?OR?
+
+	for every presence in beddit:
+		timestamp = convertTime(presence)
+		data[timestamp]['beddit'] = presense
+	for every respiration in beddit:
+		timestamp = convertTime(respiration)
+		// Amplitude, minToMin, maxToMax
+		data[timestamp]['beddit_respiration'] = respiration
+	for every ihr in beddit:
+		timestamp = convertTime(ihr)
+		// Instant heart rate
+		data[timestamp]['beddit_ihr'] = ihr
+	for every sleep stage in bddit:
+		timestamp = convertToTimestamp(sleep stage)
+		data[timestamp]['beddit sleep stage'] = sleep stage
+
+	// BioHarness
+	bioharness = readBioharnessFile(day)
+	timestamp = getTime(bioharness)
+	for every second in bioharness:
+		for 'hr', 'br', 'activity', 'acceleration', 'posture',
+			'BRAmplitude', 'ECGAmplitude', 'ECGNoise', 'XMin', 'XPeak',
+			'YMin', 'YPeak', 'ZMin', 'ZPeak' as attribute:
+			data[timestamp]['bioharness ' + attribute] = second[attribute]
+
+
+	// OpenBeacon
+		// set all locations 0
+		for every second of the day
+			for 'out', 'dining room', 'toilet ground floor', 'kitchen',
+				'living room', 'toilet first floor', 'rest', 'bed' as location:
+				data[timestamp][location] = 0
+
+		openbeacon = readerOpenBeaconFile(day)
+		for every second in openbeacon:
+			timestamp = getTimestamp(second)
+			// See Figure Decision Tree
+			location = findLocation(openbeacon, data[timestamp])
+			data[timestamp][location] = 1
+
+// Writing csv file
+
+writeHeader()
+for every second in data:
+	row = []
+
+	// Copy OpenBeacon
+	for 'out', 'dining room', 'toilet ground floor', 'kitchen',
+		'living room', 'toilet first floor', 'rest', 'bed' as location:
+		row[location] = data[second][location]
+
+	// Copy Beddit respiration
+	for 'amplitude', 'minToMin', 'maxToMax' as attribute:
+		if 'beddit respiration ' + attribute in data[second]:
+			row['beddit respiration ' + attribute] = 
+				data[second]['beddit ' + attribute]
+		else:
+			row['beddit respiration ' + attribute] = 'null'
+
+	// Copy rest of Beddit
+	for 'ihr', 'sleep stage', 'noise', 'luminosity', 'temperature',
+		'minutely actigram' as attribute:
+		if 'beddit ' + attribute in data[second]:
+			row['beddit ' + attribute in data[second] =
+				data[second]['beddit ' + attribute]
+		else:
+			row['beddit ' + attribute in data[second] = 'null'
+
+	// Copy BioHarness
+	for 'hr', 'br', 'activity', 'acceleration', 'posture',
+			'BRAmplitude', 'ECGAmplitude', 'ECGNoise', 'XMin', 'XPeak',
+			'YMin', 'YPeak', 'ZMin', 'ZPeak' as attribute:
+		if 'bioharness ' + attribute in data[second]:
+			row['bioharness ' + attribute =
+				data[second]['bioharness ' + attribute]
+		else
+			row['bioharness ' + attribute = 'null'
+
+	// Write row
+	writeRow(row)
+
+	
+
+\end{lstlisting}

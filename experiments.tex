@@ -8,10 +8,11 @@
 			The relative slow transfer rate from the device to the pc can be explained by the calculating/generation/computing of the new data.
 			The sampling frequency from the csv files is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
+		\label{sec:datadescriptionbeddit}
 			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing". Beddit don't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively \SI{}{\celsius}, \SI{}{\decibel} and \SI{}{\lux} or celsius, decibel and lux(?).
 
 		\subsubsection{OpenBeacon}
-			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB.
+			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB. The collections of the database can be exported as csv files.
 			There are two collections. The collection tags, within documents with the format tag ID, timestamp\footnote{Amount of seconds since 00:00:00 GMT January 1, 1970 (the UNIX epoch)} . For every second the OpenBeacon sees a tag, a document will be added.
 			The second collection is edges. For every second the OpenBeacon sees and edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
 			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
@@ -37,27 +38,28 @@
 			\paragraph{Beddit}
 				The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring I've download for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I receive an e-mail and I visited the website to see if everything is logged alright.
 			\paragraph{BioHarness}
-				When I wake up, I start my PC and the BioHarness Log Downloader. After about 40 minutes I've took a shower and had breakfast, the Log Downloader is ready. I put the strap on my chest with the device and turn it on. After sport I take a shower and put it off and after shower again on. The device is water resistance up to one meter, but it takes a while for the strap to get dry. Right before I go to bed I connect the device to the PC so it's recharged again the next day. So I'm missing a few minutes data every day because of the Log Downloader and the showering. 
+				When I wake up, I start my PC and the BioHarness Log Downloader. After about 40 minutes I've took a shower and had breakfast, the Log Downloader is ready. I put the strap on my chest with the device and turn it on. After sport I take a shower and put it off and after shower again on. The device is water resistance up to one meter, but it takes a while for the strap to get dry. Right before I go to bed I connect the device to the PC so it's recharged again the next day. I'm missing a few minutes data every day because of the Log Downloader and the showering. 
 			\paragraph{Openbeacon}
 		 		In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were wearing also a tag. If there was an edge between my tag and the tag dining room, my location was the dining room etc. The OpenBeacon was always on, but the script to capture the JSON output and storage it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was turned off and when I came back home I turned the script on right away. There's a few minutes missing data every day. For example, I'm late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag etc, without wearing my tag, because the script was not running. Of course the script turned off before going to bed.
 
 				
-				So now we have the data of a few locations were I was at a certain time, but we can extract more locations with some tricks. (Moving this to the data description part is strange, because the use of OpenBeacon(localization) is explained in the setup part).
+				A few locations were I was at a certain time are known, but we can extract more locations with some tricks. See Figure~\ref{fig:decisiontree} for the decision tree. (Moving this to the data description part is strange, because the use of OpenBeacon(localization) is explained in the setup part).
 
+				\begin{figure}[h!]
+					\input{decisiontree}
+					\caption{A decision tree how to find more locations}
+					\label{fig:decisiontree}
+				\end{figure}
 
-
-
-				\input{decisiontree}
+				Strange enough some tags showed up which were not part of the tags from the OpenBeacon. These 'tags' were ignored.
 				
-
-
-
-				Openbeacon is always on, but the tracking script not. I'm starting the script after waking up, turn it of when I'm leaving the house, turn it on whem I'm coming home, and turn it off when I'm going to sleep. The tags are placed at x, y, z and the tag I'm wearing is 1042. 
-		\subsubsection{Problems}
-			Beddit: strap chances position. Doesn't cover whole bed. 
-			Openbeacon: At first we had two devices and then it covers my whole house, but one device stopped working. I takes a moment to get an edge between two tags. A few minutes are missing because of starting laptop after wake up, coming home and leaving home. Need to wear a tag everytime. Sometimes no heartrate or outlier. Broke a tag.
-			Bioharness: Takes 40 minutes to upload data from device to pc, I haven't wear it in the shower. Missing some minutes while washing the strap of the device. Chances position. 
 		\subsubsection{Preprocessing}
+			In this fase all the data is used and combined to have one structed dataset after the fase. The end result is a csv file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The data set begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
+			
+			Section~\ref{sec:datadescriptionbeddit} stated Beddit uses different sampling frequencies and also have different time notations.
+
+			\input{pseudocode}
+
 			Difficult because of the differnet devices has different frequenties, different data format/extraction. 
 			Dataset, every second from start till end is a row. BioHarness already gives an 1Hz dataset, so fill in the values if BioHarness is on. 
 			Openbeacon is 4Hz and can easily converted to 1Hz.

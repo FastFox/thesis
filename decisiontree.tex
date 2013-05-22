@@ -1,49 +1,8 @@
 \tikzset{
     every node/.style={
         font=\scriptsize
-    },
-    decision/.style={
-        shape=rectangle,
-        minimum height=1cm,
-        text width=2cm,
-        text centered,
-        rounded corners=1ex,
-        draw,
-        label={[yshift=0.125cm]left:yes},
-        label={[yshift=0.125cm]right:no},
-    },
-    outcome/.style={
-        shape=ellipse,
-        fill=gray!15,
-        draw,
-        text width=1.5cm,
-        text centered
-    },
-    decision tree/.style={
-        edge from parent path={[-latex] (\tikzparentnode) -| (\tikzchildnode)},
-        sibling distance=3cm,
-        level distance=1.5cm
     }
 }
-
-
-\begin{tikzpicture}
-
-\node [decision] { Any edge with my tag? }
-    [decision tree]
-    child { node [outcome, yshift=-0.8cm, text width=2cm] { Dining room,\\ toilet ground floor, kitchen,\\ living room, hall first floor } }
-		child { node [decision, xshift=2.0cm] { Beddit presence } 
-        child { node [outcome] { in bed } }
-        child { node [decision, xshift=2.0cm] { Script is running } 
-    				[decision tree, level distance=3.0cm]
-            child { node [decision] { My tag is in range of the reader } }
-        				child { node [outcome, yshift=-5.0cm] { Rest of the house } }
-        			%child { node [outcome] { Room } }
-            child { node [outcome, xshift=1.0cm] { Out of the house } }
-        }
-    };
-
-\end{tikzpicture}
 
 \begin{tikzpicture}[
  test/.style={
@@ -73,7 +32,7 @@ rectangle,
  draw=black},
  edge from parent fork down,
  level 1/.style={
- sibling distance=8cm,
+ sibling distance=7cm,
  level distance=2cm},
  level 2/.style={
 		sibling distance=4cm,
@@ -82,38 +41,48 @@ rectangle,
  ]
 
 \node 
-(t1) [test] {Any edge with my tag?\\A} 
+(t1) [test] {Any edge with my tag?} 
 	child { 
-		node (t2) [test] {Check\\B} 
-		child { 
-			node (t3) [test] {Check\\C} 
-			child { 
-				node (t4) [test] {Check\\D}
-				edge from parent node [above] {reject C}
-			}
- 			child { 
-				node (d3) [dec] {decision 3}
-				edge from parent node [above] {accept C}
-			}
- 			edge from parent node[above] {reject B}
- 		}
- 		child { 
-			node (d1) [dec] {decision 2} 
-			edge from parent node[above] {accept B}
-		}
-	 	edge from parent node[above] {reject A}
- 	}
+		node (d1) [dec, text width=4.0cm] {
+			\begin{itemize}
+				\item Dining room
+				\item Toilet ground floor
+				\item Kitchen
+				\item Living room
+				\item Hall first floor
+				\item Toilet first floor
+			\end{itemize}
+		} 
+		edge from parent node[above] {True}
+	}
  	child { 
-		node (t5) [test] {Check\\E} 
+		node (t5) [test] {Beddit presence} 
 			child {
-				node (d4) [dec] {decision 4}
-				edge from parent node [above] {Reject E}
+				node (d4) [dec] {In Bed}
+				edge from parent node [above] {True}
 			}
 			child {
-				node (d5) [dec] {decision 5}
-				edge from parent node [above] {Accept E}
+				node (t6) [test] {OpenBeacon script is running}
+					child {
+						node (t7) [test] {My tag is in range of the OpenBeacon}
+							child {
+								node (d6) [dec] {Rest of house}
+								edge from parent node [above] {True}
+							}
+							child {
+								node (d7) [dec] {99\% in my room}
+								edge from parent node [above] {False}
+							}
+						edge from parent node [above] {True}
+					}
+					child {
+						node (d5) [dec] {Out of house}
+						edge from parent node [above] {False}
+					}
+				%node (d5) [dec] {decision 5}
+				edge from parent node [above] {False}
 			}
-		edge from parent node [above] {Accept A} 
+		edge from parent node [above] {False} 
 	}
  %child{ node (d1) [dec] {decision 1} edge from parent node[above] {accept A} } %
 ;
