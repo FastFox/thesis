@@ -19,6 +19,7 @@
 	\subsection{Beddit versus Bioharness}
 		\subsubsection{General}
 			Why - to have a baseline and to know if the devices measure the same thing. To check if it's possible to combine the data.
+
 			What - Heart rate, breath rate, activity
 		\subsubsection{Comparison}
 			Beddit on and BioHarness on during two nights.
@@ -54,14 +55,18 @@
 				Strange enough some tags showed up which were not part of the tags from the OpenBeacon. These 'tags' were ignored.
 				
 		\subsubsection{Preprocessing}
-			In this fase all the data is used and combined to have one structed dataset after the fase. The end result is a csv file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The data set begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
+			In this phase all the data is used and combined to have one structed dataset after the fase. The end result is a csv file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The data set begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
 			
-			Section~\ref{sec:datadescriptionbeddit} stated Beddit uses different sampling frequencies and also have different time notations.
-
 			\input{pseudocode}
 
-			Difficult because of the differnet devices has different frequenties, different data format/extraction. 
-			Dataset, every second from start till end is a row. BioHarness already gives an 1Hz dataset, so fill in the values if BioHarness is on. 
-			Openbeacon is 4Hz and can easily converted to 1Hz.
-			Beddit is difficult, some attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
+			Most of the code is loops and loops, calculating the right timestamp and copy data. 
+			The Beddit API only give records of the sleep stage and timestamp, when the stage is changing.
+			In the csv file the gap is filled in with missing values. There are still a lot of missing values. For example the heart rate at night. It is possible to use methods to fill in the gaps, but it's better to provide a 'raw' dataset, with only the facts. When someone would like to use the data, the person can decide herself/himself the method or solution.
+
+
+
+			%Difficult because of the differnet devices has different frequenties, different data format/extraction. 
+			%Dataset, every second from start till end is a row. BioHarness already gives an 1Hz dataset, so fill in the values if BioHarness is on. 
+			%Openbeacon is 4Hz and can easily converted to 1Hz.
+			%Beddit is difficult, some attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
 		

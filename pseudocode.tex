@@ -68,8 +68,9 @@ for every day:
 			data[timestamp][location] = 1
 
 // Writing csv file
-
 writeHeader()
+beddit_sleep_stage = 'A'
+
 for every second in data:
 	row = []
 
@@ -77,6 +78,12 @@ for every second in data:
 	for 'out', 'dining room', 'toilet ground floor', 'kitchen',
 		'living room', 'toilet first floor', 'rest', 'bed' as location:
 		row[location] = data[second][location]
+
+	// Copy Beddit sleep stage
+	if 'beddit slaap stage' in data[second]:
+		beddit_sleep_stage = data[second]['beddit sleep stage']
+
+	row['beddit sleep stage'] = beddit_sleep_stage
 
 	// Copy Beddit respiration
 	for 'amplitude', 'minToMin', 'maxToMax' as attribute:
