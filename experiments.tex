@@ -9,7 +9,7 @@
 			The sampling frequency of the csv files are \SI{1}{\hertz}.
 		\subsubsection{Beddit}
 		\label{sec:datadescriptionbeddit}
-			The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep" and "Missing". Beddit don't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively \SI{}{\celsius}, \SI{}{\decibel} and \SI{}{\lux} or celsius, decibel and lux(?).
+		The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep", "REM"\footnote{REM stands for Rapid Eye movements, it's a very light sleep and dreaming is possible in this stage.} and "Missing". Beddit doesn't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
 
 		\subsubsection{OpenBeacon}
 			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB. The collections of the database can be exported as csv files.
@@ -67,10 +67,11 @@
 
 				Strange enough some tags showed up which were not part of the tags from the OpenBeacon. These 'tags' were ignored.
 				
-		\subsubsection{Preprocessing}
-			In this phase all the data is used and combined to have one structed dataset after the fase. The end result is a csv file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The data set begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
+	\subsection{Preprocessing}
+		\subsubsection{From raw to a dataset}
+			In this phase all the data is used and combined to have one structed dataset after the fase. The end result is a csv file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The dataset begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
 			
-			\input{pseudocode}
+			%\input{pseudocode}
 
 			Most of the code is loops and loops, calculating the right timestamp and copy data. 
 			The Beddit API only give records of the sleep stage and timestamp, when the stage is changing.
@@ -122,4 +123,10 @@
 			%Dataset, every second from start till end is a row. BioHarness already gives an 1Hz dataset, so fill in the values if BioHarness is on. 
 			%Openbeacon is 4Hz and can easily converted to 1Hz.
 			%Beddit is difficult, some attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
+		\subsubsection{Extend the dataset}
+			Example how to use fill in the gaps.
+			filling the beddit heart rate gaps with interpolation.
+			Merging the beddit heart rate with the BioHarness. 
+			Still 15.96\% is missing. 
+			Fill in the gaps again with interpolation
 		
