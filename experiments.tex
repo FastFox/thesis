@@ -5,10 +5,10 @@
 			The accelerometer measures the acceleration magnitude. The peak acceleration is logged in the general log.
 			The activity level is derived from the accelerometer and is expressed in terms of VMU\footnote{Vector Magnitude Units} (g).
 			The force and directory of the gravity is known and the BioHarness is worn at the chest, so it's possible to calculate the posture of the user. The range is 180 degrees. \SI{0}{\celsius} is vertical and \SI{180}{\celsius} is inverted.
-			Breath rate is derived from the breath sensor. The relative slow transfer rate from the device to the pc could be explained by the calculating/generation/computing of the new data. The sampling frequency of the general log is \SI{1}{\hertz}.
+			Breath rate is derived from the breath sensor. The relative slow transfer rate from the device to the pc could be explained by the ?calculating/generation/computing? of the new data. The sampling frequency of the general log is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
 		\label{sec:datadescriptionbeddit}
-		The data from the sensors are being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep", "REM"\footnote{REM stands for Rapid Eye movements, it's a very light sleep and dreaming is possible in this stage.} and "Missing". Beddit doesn't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats/respiration and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
+		The data from the sensors is being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep", "REM"\footnote{REM stands for Rapid Eye movements, it's a very light sleep and dreaming is possible in this stage.} and "Missing". Beddit doesn't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
 
 		\subsubsection{OpenBeacon}
 			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB. The collections of the database can be exported as csv files.
@@ -16,32 +16,68 @@
 			The second collection is edges. For every second the OpenBeacon sees and edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
 			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
 	\subsection{Beddit versus BioHarness}
-		\subsubsection{General}
-			The first experiment is a comparison between the Beddit and the BioHarness. It's a good assignment to get go know the devices and the data. The two devices have overlapping features like the heart rate, breath rate and activity level. It would be a good test to see if they measure the same thing. 
 		\subsubsection{Comparison}
+			The first experiment is a comparison between the Beddit and the BioHarness. It's a good assignment to get go know the devices and the data. The two devices have overlapping features like the heart rate, breath rate and activity level. It would be a good test to see if they measure the same thing. 
 			Beddit does not have a constant sampling frequency. After every heart beat the bpm is computed between the heartbeat and the previous heartbeat. The value is notated with the amount of seconds since the session. For every heartbeat, the associated minute and the heart rate is summed up with all the other heartbeat heart rates, and divided by the amount of heartbeats in that specific minute. This results in an average heart rate per minute. The respiration rate is also summed up, but doesn't needs to be divided, because it's the amount of breaths taken.
-			The BioHarness heart rate, breath rate and activity calculations are the same. The difference is that the Bioharness has a constant sampling frequency from \SI{1}{\hertz}. 
-			The Beddit binary actigram has already one record per minute, it's just needs to be copied. It's not the same as the BiorHharness Activity, so it would be good to standardize the BioHarness activity and the Beddit binary actigram.
-			\begin{equation}
-			average = sum / amount \\
-			diff = (average - value)^2 \\
-			standard = (value - average) / diff
-			\end{equation}
+			The BioHarness heart rate, breath rate and activity calculations are done the same. The difference is that the Bioharness has a constant sampling frequency from \SI{1}{\hertz}. 
+			The Beddit binary actigram has already one record per minute, it's just needs to be copied. It's not the same as the BiorHharness Activity, so it would be good to standardize\footnote{Standardization makes it easier to compare} the BioHarness activity and the Beddit binary actigram.
+			\begin{figure}[h]
+				\begin{equation}
+					\label{eq:standardize}
+					\mu = \frac{ \sum\limits_{i=1}^n y_i } { n }
+				\end{equation}
+				\begin{equation}
+					D_i = (X_i - \mu)^2
+				\end{equation}
+				\begin{equation}
+					\sigma = \sqrt{ \frac{ \sum\limits_{i=1}^n D_i } { n } }
+				\end{equation}
+				\begin{equation}
+					standardized\ value_i = \frac{ y_i - \bar{y} } { \mu }
+				\end{equation}
+				\caption{Standardization method\cite{statistics}}
+			\end{figure}
 
-
-
-			. Sum all data of heart beats in a minute and divide by total, to get average ihr of the minute. 
-			Bioharness needs to convert from seconds to minutes. To the same for breath rate. 
-			Beddit activity and BioHarness activity are different things, so standarize.
+			Both devices were used for one night. The sampling frequency is \SI{16.67}{\milli\hertz} (every one minute). Minutes with missing data are removed. Section \ref{sec:datacollection} explains more about the setup and how to bundle the data. Sleeping with the BioHarness is possible when laying on the back. Sleeping on the left side is not comfortable. The tool QUICKIE\footnote{QUICKY stands for Quick User Interface for Convolution Kernel-Involving Experiments and is being made and used by the Data Minig Group of Liacs, but is not yet published.} is used to visualize the data and find the correlations.
 
 		\subsubsection{Results}
-			HR is correlated 0.95 when moving average is used.
-			BR is 0.3?, very low. They are measering something else.
-			Activity has some patterns, but is not measurable in terms of correlation.
+			
+			\begin{figure}[h]
+				\centering
+					\includegraphics[scale=0.5]{avgbiovsavgbeddit.png}
+					
+				\caption{Part of the plot of the heart rate}
+				\label{fig:avgbiovsavgbeddit}
 
+			\end{figure}
 
+			The lines in Figure~\ref{fig:avgbiovsavgbeddit} are not exactly the same, but have the same pattern. The correlation is 0.61. The low correlation could be explained by lag in measurements or one (or both) devices doesn't measure it correct. Moving average is a technique to smooth the lines. If width 7 is used, then it means a value on the new line is composed from the previous 3 minutes untill the next 3 minutes of the old line. With the heart rate example it will result in correlation of 0.98.\
+						
+			\begin{figure}[h]
+				\centering
+					\includegraphics[scale=0.5]{vsbr.png}
+					
+				\caption{Plot of the breath rate}
+				\label{fig:vsbr}
+
+			\end{figure}
+
+			The lines in Figure~\ref{fig:vsbr} are different. The correlation is 0.12, and even with moving average (width 10) used the correlation is still 0.47. There is something wrong, or the devices are measuring something else. The correlation of the standardized values is still 0.12. 
+						
+			\begin{figure}[h]
+				\centering
+					\includegraphics[scale=0.5]{vsactivity.png}
+					
+				\caption{Part of the plot of the activity}
+				\label{fig:vsactivity}
+
+			\end{figure}
+			The Beddit actigram and the BioHarness activity are something different, so standardization is used. Figure~\ref{fig:vsactivity} shows some similarities, but the correlation is still low (0.26). Moving average doesn't help. 
+
+			The heart rates of the Bioharness and the Beddit could be merged to one variable. The BioHarness breath rate and the Beddit respiration rate is totally different. The lines of the activity are a bit like each other, but the correlation of the activity is low and by far not good enough to merge it into one variable.
 
 	\subsection{Data collection}
+		\label{sec:datacollection}
 		\paragraph{Beddit}
 			The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring I've download for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I receive an e-mail and I visited the website to see if everything is logged alright.
 		\paragraph{BioHarness}
