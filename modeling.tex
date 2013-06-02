@@ -9,7 +9,7 @@
 		\label{fig:crispdm}
 
 	\end{figure}
-	Cross Industry Standard Process for Data Mining\cite{wirth2000crisp} is invented out of necessity for better planning, documentation and communication for Data Mining projects. It's divided in multiple phases, as seen in Figure~\ref{fig:crispdm}. The business understanding phase is to describe the urge and the goal of the project, see Section~\ref{seq:motivation}. The data understanding phase is to learn about the data, what is the source and how it is computed. In Section~\ref{sec:sensorsystems},~\ref{sec:datadescription} and ~\ref{sec:bvsb} the sensors systems are described, how they are used and what the data is. Normally the data is already collected, but this project needs another phase. The data collection phase is described in Section~\ref{sec:datacollection}. The next phase is the data preparation phase. In this project it exists out of two parts. The first part is about preprocessing to compute the dataset, as seen in Section~\ref{sec:preprocessing}. The dataset can be used by the Liacs Data Mining Group for further research. The second part is the feature extraction section, which describes the computing of the training set, seen in Section~\ref{sec:feature}. 
+	This subsection has some theory, to get a view of the big picture. Cross Industry Standard Process for Data Mining\cite{wirth2000crisp} is invented out of necessity for better planning, documentation and communication for Data Mining projects. It's divided in multiple phases, as seen in Figure~\ref{fig:crispdm}. The business understanding phase is to describe the urge and the goal of the project, see Section~\ref{seq:motivation}. The data understanding phase is to learn about the data, what is the source and how it is computed. In Section~\ref{sec:sensorsystems},~\ref{sec:datadescription} and ~\ref{sec:bvsb} the sensors systems are described, how they are used and what the data is. Normally the data is already collected, but this project needs another phase. The data collection phase is described in Section~\ref{sec:datacollection}. The next phase is the data preparation phase. In this project it exists out of two parts. The first part is about preprocessing to compute the dataset, as seen in Section~\ref{sec:preprocessing}. The dataset can be used by the Liacs Data Mining Group for further research. The second part is the feature extraction section, which describes the computing of the training set, seen in Section~\ref{sec:feature}. 
 	A model is a generalised representation of the data. An algorithm tries to make relations between attributes. There are three reasons to make such an model:
 	\begin{enumerate}
 		\item Prediction. A bank give loans to clients and they will try to choose the best interest rate, such that the client will accept the interest rate, can pay the interest rate and the loan back over time and the bank will make a profit. Based on data from old clients a model can be made and the probability of a client getting problems with paying the intereset rate can be calculated. Based on this information the high of the loan and the interest rate can be determined.\cite{credit} Another example is predicting the age of a Twitter user\cite{tweetgenie}.		
@@ -24,6 +24,73 @@
 	- linear regression
 	- neural network
 	- results 
+
+	avgHr vs hr100+
+	out vs bedroom
+	out vs hr120-140
+	dining.room - kitchen
+
+	inbed vs avgNoise: hoe later naar bed -> hoe minder geluid?, doordat je waarschijnlijk niet aanwezig bent in de kamer.
+	outbed vs stageA: later naar bed, vaker away, later opstaan.
+	outbed vs inbed: correlatie is 0.21. 
+
+	light sleep neemt toe naarmate ik later naar bed ga, maar deep sleep ook. Val dus sneller in slaap. 
+	Sleep efficiency neemt toe als ik latar naar bed ga. (r=0.5) Later opstaan zorgt juist voor het tegenovergestelde.
+	later naar bed gaan dan gisteren resulteert ook in lagere sleep efficiency
+	outbed vs inbed: r = 0.49
+	Sta ik later naar bed, of later uit bed dan gisteren, gaat de efficiency omlaag 
+	target
+
+	\newpage
+	\subsection{Correlations}
+	In Table \ref{tab:cor}, 28 correlations are listed. Analyzing the results gives some trivial conclusions, but also interesting ones. \#3 says when I wake up later, the difference between the previous wake up is greater. The higher the correlations the more consistent the sleep rythm. \#6 says, the later I go to bed, the more I'm away from my bed. \#11 is also trivial. \#1 and \#4 are more interesting, because it means when I diverge from my normal sleep rythm, I will sleep less efficient. Going later to bed and waking up later will result\footnote{``Will result'' is not precisely true. Correlation doesn't mean causality, but in this paragraph the causality is assumed.}  in less REM sleep and it will not be at the expense of deep sleep. As a matter of fact, the correlation is positive, it will result in a bit more deep and light sleep. Going later to bed will result in less time awake in bed, but sleeping longer in the morning will result in more awake time. \#18 is also an interesting correlation, but the resting heart rate is relative constant, so it doesn't need to mean anything. A high heart rate will result in a less efficient sleep, based on \#20 and \#27, but based on \#21 and \#24 it will result in more deep sleep. Most trivial correlation is \#28, because stageW is part of the formula to calculate the sleep efficiency.
+		
+
+
+	\begin{table}
+		\centering
+		\newcounter{rownum}
+		\setcounter{rownum}{0}
+		\newcommand\rownumber{\stepcounter{rownum}\arabic{rownum}}
+	\begin{tabular}{| c | l | l | l |}
+		\hline
+		\# & Feature A & Feature B & Correlation \\ \hline
+		\rownumber & outbed.difference\tablefootnote{The amount of minutes woke up later than the previous day} & sleep.efficiency\tablefootnote{Relative time slept in bed} & -0.51 \\
+		\rownumber & outbed\tablefootnote{Amount of minutes woke up after 08:00 am} & inbed.difference & 0.33 \\
+		\rownumber & outbed & outbed.difference & 0.54 \\
+		\rownumber & inbed.difference & sleep.efficiency & -0.14 \\
+		\rownumber & inbed\tablefootnote{Amount of minutes going to bed after 22:00 pm} & outbed & 0.21 \\ 
+		\rownumber & inbed & stageA\tablefootnote{Away} & 0.50 \\
+		\rownumber & inbed & stageW\tablefootnote{Wake} & -0.53 \\
+		\rownumber & inbed & stageD\tablefootnote{Deep sleep} & 0.10 \\
+		\rownumber & inbed & stageL\tablefootnote{Light sleep} & 0.09 \\
+		\rownumber & inbed & stageR\tablefootnote{REM sleep} & -0.40 \\
+		\rownumber & outbed & stageA & -0.74 \\    
+		\rownumber & outbed & stageW & 0.13 \\    
+		\rownumber & outbed & stageL & 0.07 \\
+		\rownumber & outbed & stageD & 0.03 \\
+		\rownumber & outbed & stageR & -0.67 \\
+		\rownumber & hr100+ & resting.heartrate & 0.28 \\
+		\rownumber & stress.percent & resting.heartrate & -0.35 \\
+		\rownumber & out\tablefootnote{Out of the house} & resting.heartrate & 0.65 \\
+		\rownumber & stageD & resting.heartrate & -0.15 \\
+		\rownumber & hr140+ & sleep.efficiency & -0.59 \\
+		\rownumber & hr100+ & stageD & 0.25 \\
+		\rownumber & hr100+ & stageL & -0.13 \\
+		\rownumber & hr100+ & stageR & -0.41 \\
+		\rownumber & avgHR & stageD & 0.32 \\
+		\rownumber & avgHR & stageL & -0.17 \\
+		\rownumber & avgHR & stageR & -0.46 \\
+		\rownumber & avgHR & sleep.efficiency & -0.39 \\
+		\rownumber & stageW & sleep.efficiency & -0.99 \\
+
+		\hline
+	\end{tabular}
+	\caption{A few correlations between different features}
+	\label{tab:cor}
+	\end{table}
+	
+	\tablefootnote
 
 	\iffalse
 
