@@ -5,24 +5,24 @@
 		From the data produced by the sensors more data can be derived. For the experiments the general log is used, because it has the most interesting variables and a lot preprocessing is already done. The heart rate is the amount of beats per minute and can be derived from the ECG. In the ECG graph (See Figure~\ref{fig:ecg}) a pattern is visible, also called a cycle. Each cycle is one heartbeat. 
 			The accelerometer measures the acceleration magnitude. The peak acceleration is logged in the general log.
 			The activity level is derived from the accelerometer and is expressed in terms of VMU\footnote{Vector Magnitude Units} (g).
-			The force and directory of the gravity is known and the BioHarness is worn at the chest, so it's possible to calculate the posture of the user. The range is 180 degrees. \SI{0}{\celsius} is vertical and \SI{180}{\celsius} is inverted.
-			Breath rate is derived from the breath sensor. The relative slow transfer rate from the device to the pc could be explained by the ?calculating/generation/computing? of the new data. The sampling frequency of the general log is \SI{1}{\hertz}.
+			The force and direction of the gravity is known and the BioHarness is worn at the chest, so it's possible to calculate the posture of the user. The range is 180 degrees. \SI{0}{\celsius} is vertical and \SI{180}{\celsius} is inverted.
+			Breath rate is derived from the breath sensor. The relative slow transfer rate from the device to the pc could be explained by the ?calculating/generating/computing? of the new data. The sampling frequency of the general log is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
 		\label{sec:datadescriptionbeddit}
-		The data from the sensors is being transferred via wifi or cable to the web servers from Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit is using the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the server is analyzing the data and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are "Away", "Wake", "Light sleep", "Deep sleep", "REM"\footnote{REM stands for Rapid Eye movements, it's a very light sleep and dreaming is possible in this stage.} and "Missing". How Beddit computed these stages is not explained, but they probably used the heart rate and the binary actigram. Beddit doesn't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
+		The data from the sensors is being transferred via wifi or cable to the web servers of Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit uses the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the servers are going to analyze it and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are ``Away'', ``Wake'', ``Light sleep'', ``Deep sleep'', ``REM''\footnote{REM stands for Rapid Eye movements, it's a very light sleep and dreaming is possible in this stage.} and ``Missing''. How Beddit computed these stages is not explained, but they probably use the heart rate and the binary actigram. Beddit doesn't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
 
 		\subsubsection{OpenBeacon}
 			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB. The collections of the database can be exported as csv files.
 			There are two collections. The collection tags, within documents with the format tag ID, timestamp\footnote{Amount of seconds since 00:00:00 GMT January 1, 1970 (the UNIX epoch)} . For every second the OpenBeacon sees a tag, a document will be added.
-			The second collection is edges. For every second the OpenBeacon sees and edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
-			The higher the power level the closer the tags are. The power level can not be expressed in terms of distance, because other things could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
+			The second collection called edges. For every second the OpenBeacon sees an edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
+			The higher the power level the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
 	\subsection{Beddit versus BioHarness}
 		\label{sec:bvsb}
 		\subsubsection{Comparison}
 			The first experiment is a comparison between the Beddit and the BioHarness. It's a good assignment to get to know the devices and the data. The two devices have overlapping features like the heart rate, breath rate and activity level. It would be a good test to see if they measure the same thing. 
-			Beddit does not have a constant sampling frequency. After every heart beat the bpm is computed between the heartbeat and the previous heartbeat. The value is notated with the amount of seconds since the session. For every heartbeat, the associated minute and the heart rate is summed up with all the other heartbeat heart rates, and divided by the amount of heartbeats in the specific minute. This results in an average heart rate per minute. The respiration rate is also summed up, but doesn't needs to be divided, because it's the amount of breaths taken.
+			Beddit does not have a constant sampling frequency. After every heartbeat the bpm is computed between the heartbeat and the previous heartbeat. The value is notated with the amount of seconds since the session. For every heartbeat, the associated minute and the heart rate is summed up with all the other heartbeat heart rates, and divided by the amount of heartbeats in the specific minute. This results in an average heart rate per minute. The respiration rate is also summed up, but doesn't needs to be divided, because it's the amount of breaths taken.
 			The BioHarness heart rate, breath rate and activity calculations are done the same. The difference is the Bioharness has a constant sampling frequency from \SI{1}{\hertz}. 
-			The Beddit binary actigram has already one record per minute, it just needs to be copied. It's not the same as the BiorHarness Activity, so it would be good to standardize\footnote{Standardization makes it easier to compare values with different scales} the BioHarness activity and the Beddit binary actigram.
+			The Beddit binary actigram has already one record per minute, it just needs to be copied. It's not the same as the BioHarness activity, so it would be good to standardize\footnote{Standardization makes it easier to compare values with different scales} the BioHarness activity and the Beddit binary actigram.
 			\begin{figure}[h]
 				\begin{equation}
 					\label{eq:standardize}
@@ -53,7 +53,7 @@
 
 			\end{figure}
 
-			The lines in Figure~\ref{fig:avgbiovsavgbeddit} are not exactly the same, but do have the same pattern. The correlation is 0.61. The low correlation could be explained by lag in measurements or one (or both) devices doesn't measure it correct. Moving average is a technique to smooth the lines. If width 7 is used, then it means a value on the new line is composed from the current and the previous 6 minutes of the old line. With the heart rate example it will result in correlation of 0.98.\
+			The lines in Figure~\ref{fig:avgbiovsavgbeddit} are not exactly the same, but do have the same pattern. The correlation is 0.61. The low correlation could be explained by lag in measurements or one (or both) devices doesn't measure it correct. Moving average is a technique to smooth the lines. If width 7 is used, then it means a value on the new computed line is composed from the current and the previous 6 minutes of the old line. If moving average is applied to both lines, the correlation of the heart rates will be 0.98.\
 						
 			\begin{figure}[h]
 				\centering
@@ -64,7 +64,7 @@
 
 			\end{figure}
 
-			The lines in Figure~\ref{fig:vsbr} are different. The correlation is 0.12, and with moving average (width 10) used the correlation is still 0.71. There is something wrong, or the devices are measuring something else. The correlation of the standardized values is 0.26. 
+			The lines in Figure~\ref{fig:vsbr} are different. The correlation is 0.12. When moving average (width 10) is used the correlation is still 0.71. There is something wrong or the devices are measuring something else. The correlation of the standardized values is 0.26. 
 						
 			\begin{figure}[h]
 				\centering
@@ -76,19 +76,18 @@
 			\end{figure}
 			The Beddit actigram and the BioHarness activity are something different, so standardization is used. Figure~\ref{fig:vsactivity} shows some similarities, but the correlation is still low (0.26). Moving average doesn't help to improve the correlation.
 
-			The heart rates of the Bioharness and the Beddit could be merged to one variable. The BioHarness breath rate and the Beddit respiration rate is totally different. The lines of the activity are a bit like each other, but the correlation of the activity is low and by far not good enough to merge it into one variable.
+			The heart rates of the Bioharness and the Beddit could be merged to one variable. The BioHarness breath rate and the Beddit respiration rate is totally different. The lines of the activity are a bit like each other, but the correlation of the activity is low and by far not good enough to merge them into one variable.
 
 	\subsection{Data collection}
 		\label{sec:datacollection}
 		\paragraph{Beddit}
-			The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring I've download for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I receive an e-mail and I visited the website to see if everything is logged alright.
+			The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring I've downloaded for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I received an email and I visited the website to see if everything is logged alright.
 		\paragraph{BioHarness}
 			When I wake up, I start my PC and the BioHarness Log Downloader. After about 40 minutes I've took a shower and had breakfast, the Log Downloader is ready. I put the strap on my chest with the device and turn it on. After sport I take a shower and put it off and after shower again on. The device is water resistance up to one meter, but it takes a while for the strap to get dry. Right before I go to bed I connect the device to the PC so it's recharged again the next day. I'm missing a few minutes data every day because of the Log Downloader and the showering. 
 		\paragraph{Openbeacon}
-			In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were wearing also a tag. If there was an edge between my tag and the tag dining room, my location was the dining room etc. The OpenBeacon was always on, but the script to capture the JSON output and storage it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was turned off and when I came back home I turned the script on right away. There's a few minutes missing data every day. For example, I'm late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag etc, without wearing my tag, because the script was not running. Of course the script turned off before going to bed.
-
+			In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were wearing also a tag. If there was an edge between my tag and the tag dining room, my location was the dining room for example. The OpenBeacon was always on, but the script to capture the JSON output and storage it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was stopped and when I came back home I started the script right away. There are a few minutes missing data every day. For example, I'm late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag etc, without wearing my tag, because the script was not running. Of course the script is stopped before going to bed.
 			
-			A few locations were I was at a certain time are known, but we can extract more locations with some tricks. See Figure~\ref{fig:decisiontree} for the decision tree.
+			A few locations were I was at a certain time are known, but more locations could be extracted with some tricks. See Figure~\ref{fig:decisiontree} for the decision tree.
 
 				\begin{figure}[h!]
 					\input{decisiontree}
@@ -106,8 +105,7 @@
 			%\input{pseudocode}
 
 			Most of the code is loops and more loops, calculating the right timestamp and copy data. 
-			The Beddit API only give records of the sleep stage and timestamp, when the stage is changing.
-			In the csv file the gap is filled in with missing values. There are still a lot of missing values. For example the heart rate at night. It is possible to use methods to fill in the gaps, but it's better to provide a 'raw' dataset, with only the facts. When someone would like to use the data, the person can decide herself/himself the method or solution.
+			The Beddit API only give records of the sleep stage and timestamp, when the stage is changing. The gaps with missing values are filled in. See Figure~\ref{fig:missingvalues}. There are still a lot of missing values. For example the heart rate at night. It is possible to use methods to fill in the gaps, but it's better to provide a 'raw' dataset, with only the facts. When someone would like to use the data, the person can decide herself/himself the method or solution.
 			\begin{figure}[h!]
 			\[ 
 				\left(
@@ -147,6 +145,7 @@
 				\right)
 			\] 
 			\caption{How the missing values are filled in of the sleep stages}
+			\label{fig:missingvalues}
 		\end{figure}
 		
 
@@ -158,11 +157,8 @@
 			%Openbeacon is 4Hz and can easily converted to 1Hz.
 			%Beddit is difficult, some attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
 		\subsubsection{Extend the dataset}
-			Example how to use fill in the gaps.
-			filling the beddit heart rate gaps with linear interpolation.
-			Merging the beddit heart rate with the BioHarness. 
-			Still 15.96\% is missing. 
-			Fill in the gaps again with linear interpolation
+			This subsection gives an example how the missing values can be filled in.	The Beddit heart rate gaps are filled in as seen in Figure~\ref{fig:lin} with linear interpolation. The Beddit heart rate and the BioHarness heart rate are now merged into one variable. There are still missing values in this merged variable and they are also filled in with linear interpolation.
+
 			\begin{figure}[h!]
 			\[ 
 				\left(
@@ -196,5 +192,6 @@
 				\right)
 			\] 
 			\caption{Linear interpolation to fill in the missing values of the heart rates}
+			\label{fig:lin}
 		\end{figure}
 		
