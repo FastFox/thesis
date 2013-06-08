@@ -1,4 +1,4 @@
-\section{Experiments}
+\section{Self-Tracking}
 	\subsection{Data description}
 	\label{sec:datadescription}
 		\subsubsection{BioHarness}
@@ -6,7 +6,7 @@
 			The accelerometer measures the acceleration magnitude. The peak acceleration is logged in the general log.
 			The activity level is derived from the accelerometer and is expressed in terms of VMU\footnote{Vector Magnitude Units} (g).
 			The force and direction of the gravity is known and the BioHarness is worn at the chest, so it's possible to calculate the posture of the user. The range is 180 degrees. \SI{0}{\celsius} is vertical and \SI{180}{\celsius} is inverted.
-			Breath rate is derived from the breath sensor. The relative slow transfer rate from the device to the pc could be explained by the ?calculating/generating/computing? of the new data. The sampling frequency of the general log is \SI{1}{\hertz}.
+			Breath rate is derived from the breath sensor. The sampling frequency of the general log is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
 		\label{sec:datadescriptionbeddit}
 		The data from the sensors is being transferred via wifi or cable to the web servers of Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration\footnote{Beddit uses the term respiration for breathing.} and the activity from the BCG. When all data is received of the night, the servers are going to analyze it and will compute the sleep stages, sleep efficiency\footnote{Relative time sleeping compared to time in bed}, average heart rata, average noise level and stress level. The stages are ``Away'', ``Wake'', ``Light sleep'', ``Deep sleep'', ``REM''\footnote{REM stands for Rapid Eye movements, it's a very light sleep and dreaming is possible in this stage.} and ``Missing''. How Beddit computed these stages is not explained, but they probably use the heart rate and the binary actigram. Beddit doesn't use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04\cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
@@ -15,7 +15,7 @@
 			The Openbeacon produces JSON and is stored in a NoSQL\footnote{A NoSQL database is the counterpart of a relational database. One argument to use it is because it's more flexible.} database MongoDB. The collections of the database can be exported as csv files.
 			There are two collections. The collection tags, within documents with the format tag ID, timestamp\footnote{Amount of seconds since 00:00:00 GMT January 1, 1970 (the UNIX epoch)} . For every second the OpenBeacon sees a tag, a document will be added.
 			The second collection called edges. For every second the OpenBeacon sees an edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
-			The higher the power level the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency.
+			The higher the power level the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency. - Reference to location histogram
 	\subsection{Beddit versus BioHarness}
 		\label{sec:bvsb}
 		\subsubsection{Comparison}
@@ -37,7 +37,7 @@
 				\begin{equation}
 					standardized\ value_i = \frac{ y_i - \bar{y} } { \mu }
 				\end{equation}
-				\caption{Standardization method\cite{statistics}}
+				\caption{Z-normalization \cite{statistics}}
 			\end{figure}
 
 			Both devices were used for one night. The sampling frequency is \SI{16.67}{\milli\hertz} (every one minute). Minutes with missing data are removed. Section \ref{sec:datacollection} explains more about the setup and how to bundle the data. Sleeping with the BioHarness is possible when laying on the back. Sleeping on the left side is not comfortable. The tool QUICKIE\footnote{QUICKY stands for Quick User Interface for Convolution Kernel-Involving Experiments and is being made and used by the Data Minig Group of Liacs, but is not yet published.} is used to visualize the data and find the correlations.
@@ -48,7 +48,7 @@
 				\centering
 					\includegraphics[scale=0.5]{avgbiovsavgbeddit.png}
 					
-				\caption{Part of the plot of the heart rate}
+				\caption{Part of the plot of the heart rate - y-axis HR, x-axis time in minutes}
 				\label{fig:avgbiovsavgbeddit}
 
 			\end{figure}

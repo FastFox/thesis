@@ -1,0 +1,112 @@
+=== Run information ===
+
+Scheme:weka.classifiers.trees.J48 -C 0.25 -M 10000
+Relation:  self-tracking
+Instances:    585195
+Attributes:   15
+        bioharness.hr
+        bioharness.br
+        bioharness.activity
+        bioharness.acceleration
+        bioharness.posture
+        bioharness.BRAmplitude
+        bioharness.ECGAmplitude
+        bioharness.ECGNoise
+        bioharness.XMin
+        bioharness.XPeak
+        bioharness.YMin
+        bioharness.YPeak
+        bioharness.ZMin
+        bioharness.ZPeak
+        location
+Test mode:split 66.0% train, remainder test
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+bioharness.ZMin <= 0.2
+| bioharness.hr <= 76
+| | bioharness.ECGNoise <= 0.00038
+| | |  ioharness.XPeak <= -0.91
+| | | | bioharness.YPeak <= 0.14: out (38661.0/10391.0)
+| | | | bioharness.YPeak > 0.14: bedroom (10145.0/2478.0)
+| | |   bioharness.XPeak > -0.91
+| | | | bioharness.XPeak <= -0.55
+| | | | | bioharness.YMin <= 0.38
+| | | | | | bioharness.XMin <= -0.95
+| | | | | | | bioharness.YPeak <= 0.02: out (18344.0/7964.0)
+| | | | | | | bioharness.YPeak > 0.02: bedroom (10420.0/4330.0)
+| | | | | | bioharness.XMin > -0.95
+| | | | | | | bioharness.YPeak <= 0.24: bedroom (83213.0/27102.0)
+| | | | | | | bioharness.YPeak > 0.24
+| | | | | | | | bioharness.ECGAmplitude <= 0.006544: out (11589.0/3496.0)
+| | | | | | | | bioharness.ECGAmplitude > 0.006544: bedroom (10518.0/5271.0)
+| | | | | bioharness.YMin > 0.38: bedroom (13440.0/1950.0)
+| | | | bioharness.XPeak > -0.55: out (19106.0/9006.0)
+| |   bioharness.ECGNoise > 0.00038
+| | | bioharness.br <= 18.9
+| | | | bioharness.XPeak <= -0.89: out (24825.0/7452.0)
+| | | | bioharness.XPeak > -0.89
+| | | | | bioharness.XPeak <= -0.48
+| | | | | | bioharness.ECGNoise <= 0.00252
+| | | | | | | bioharness.ECGAmplitude <= 0.006284: out (16642.0/5935.0)
+| | | | | | | bioharness.ECGAmplitude > 0.006284: bedroom (18015.0/9636.0)
+| | | | | | bioharness.ECGNoise > 0.00252: out (17358.0/8403.0)
+| | | | | bioharness.XPeak > -0.48: out (12814.0/5855.0)
+| | | bioharness.br > 18.9: out (27675.0/6654.0)
+| bioharness.hr > 76: out (177488.0/28576.0)
+bioharness.ZMin > 0.2
+| bioharness.ZPeak <= 0.71: bedroom (64809.0/14869.0)
+| bioharness.ZPeak > 0.71: rest.of.the.house (10133.0/5283.0)
+
+Number of Leaves  : 	18
+
+Size of the tree : 	35
+
+
+Time taken to build model: 26799.5 seconds
+
+=== Evaluation on test split ===
+=== Summary ===
+
+Correctly Classified Instances   139991      70.3593 %
+Incorrectly Classified Instances  58975      29.6407 %
+Kappa statistic         0.4574
+Mean absolute error        0.0887
+Root mean squared error       0.2107
+Relative absolute error    73.3055 %
+Root relative squared error   85.5952 %
+Total Number of Instances     198966  
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   	           Recall  	     ROC Area
+	                     FP Rate Precision     F-Measure     Class
+               0.89   0.374   0.723  0.89   0.798  0.828  out
+               0      0       0      0      0      0.755  dining.room
+               0      0       0      0      0      0.741  toilet.ground.floor
+               0      0       0      0      0      0.746  kitchen
+               0      0       0      0      0      0.839  living.room
+               0      0       0      0      0      0.769  hall.first.floor
+               0      0       0      0      0      0.78   toilet.first.floor
+               0      0       0      0      0      0.598  rest.of.the.house
+               0.723  0.176   0.669  0.723  0.695  0.836  bedroom
+               0      0       0      0      0      0.782  bed
+Weighted Avg.  0.704  0.253   0.598  0.704  0.646  0.804
+
+=== Confusion Matrix ===
+
+  a  b  c  d  e  f  g  h  i     j   <-- classified as
+ 92510  0  0  0  0  0  0  0 11401  0 |  a = out
+  1101  0  0  0  0  0  0  0  1208  0 |  b = dining.room
+   679  0  0  0  0  0  0  0   357  0 |  c = toilet.ground.floor
+   392  0  0  0  0  0  0  0    42  0 |  d = kitchen
+   458  0  0  0  0  0  0  0  2248  0 |  e = living.room
+   661  0  0  0  0  0  0  0    38  0 |  f = hall.first.floor
+   280  0  0  0  0  0  0  0    36  0 |  g = toilet.first.floor
+ 13583  0  0  0  0  0  0  0  8121  0 |  h = rest.of.the.house
+ 18189  0  0  0  0  0  0  0 47481  0 |  i = bedroom
+   181  0  0  0  0  0  0  0     0  0 |  j = bed
+

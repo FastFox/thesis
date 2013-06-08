@@ -28,6 +28,7 @@
 \parindent=0pt
 \frenchspacing
 \usepackage{graphicx}
+\usepackage[toc,page]{appendix}
 
 \usepackage{algorithm2e}
 \usepackage{listings}
@@ -40,6 +41,8 @@
 \usepackage{biblatex}
 \usepackage{tablefootnote}
 \usepackage{eurosym}
+
+
 \bibliography{thesis}
 
 
@@ -58,7 +61,7 @@
 \sf 
 
 %Ask for a unique serial number! And the date ...
-\hspace*{2.5cm}Internal Report 2013--number \hfill June 2013
+\hspace*{2.5cm}Internal Report 2012-2013-04 \hspace*{4.5cm} 14 June 2013
 
 \vspace*{5mm}
 
@@ -84,10 +87,13 @@
 
 %\hfill Sensor Systems
 
-\vspace*{4cm}
+\vspace*{3cm}
 
 %Here your name
-\hfill Michiel Vos
+\hfill Michiel Vos\\
+\hspace*{5cm}\small \hfill Supervisors:\\
+\hspace*{5cm}\small \hfill Dr. Arno Knobbe\\
+\hspace*{5cm}\small \hfill Ricardo Cachucho MSc.
 
 \end{Large}
 
@@ -135,5 +141,7 @@
 \include{conclusions}
 
 \printbibliography
+
+\include{appendix}
 
 \end{document}
