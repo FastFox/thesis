@@ -32,7 +32,7 @@ bioharness.ZMin <= 0.2
 | | |  ioharness.XPeak <= -0.91
 | | | | bioharness.YPeak <= 0.14: out (38661.0/10391.0)
 | | | | bioharness.YPeak > 0.14: bedroom (10145.0/2478.0)
-| | |   bioharness.XPeak > -0.91
+| | | bioharness.XPeak > -0.91
 | | | | bioharness.XPeak <= -0.55
 | | | | | bioharness.YMin <= 0.38
 | | | | | | bioharness.XMin <= -0.95
@@ -45,7 +45,7 @@ bioharness.ZMin <= 0.2
 | | | | | | | | bioharness.ECGAmplitude > 0.006544: bedroom (10518.0/5271.0)
 | | | | | bioharness.YMin > 0.38: bedroom (13440.0/1950.0)
 | | | | bioharness.XPeak > -0.55: out (19106.0/9006.0)
-| |   bioharness.ECGNoise > 0.00038
+| | bioharness.ECGNoise > 0.00038
 | | | bioharness.br <= 18.9
 | | | | bioharness.XPeak <= -0.89: out (24825.0/7452.0)
 | | | | bioharness.XPeak > -0.89

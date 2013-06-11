@@ -22,10 +22,10 @@
 			The first experiment is a comparison between the Beddit and the BioHarness. It is a good assignment to get to know the devices and the data. The two devices have overlapping features like the heart rate, breath rate and activity level. It would be a good test to see if they measure the same thing. 
 			Beddit does not have a constant sampling frequency. After every heartbeat the bpm is computed between the heartbeat and the previous heartbeat. The value is notated with the amount of seconds since the session. For every heartbeat, the associated minute and the heart rate is summed up with all the other heartbeat heart rates, and divided by the amount of heartbeats in the specific minute. This results in an average heart rate per minute. The respiration rate is also summed up, but does not needs to be divided, because it is the amount of breaths taken.
 			The BioHarness heart rate, breath rate and activity calculations are done the same. The difference is the Bioharness has a constant sampling frequency from \SI{1}{\hertz}. 
-			The Beddit binary actigram has already one record per minute, it just needs to be copied. It is not the same as the BioHarness activity, so it would be good to standardize\footnote{Standardization makes it easier to compare values with different scales} the BioHarness activity and the Beddit binary actigram.
+			The Beddit binary actigram has already one record per minute, it just needs to be copied. It is not the same as the BioHarness activity, so it would be good to normalise\footnote{Normalisation makes it easier to compare values with different scales.} the BioHarness activity and the Beddit binary actigram.
 			\begin{figure}[h]
 				\begin{equation*}
-					\label{eq:standardize}
+					\label{eq:normalisation}
 					\mu = \frac{ \sum\limits_{i=1}^n y_i } { n }
 				\end{equation*}
 				\begin{equation*}
@@ -37,7 +37,7 @@
 				\begin{equation*}
 					y'_i = \frac{ y_i - \bar{y} } { \mu }
 				\end{equation*}
-				\caption{Z-normalization \cite{statistics}}
+				\caption{Z-normalisation \cite{statistics}}
 			\end{figure}
 
 			Both devices were used for one night. The sampling frequency is \SI{16.67}{\milli\hertz} (every one minute). Minutes with missing data are removed. Section \ref{sec:datacollection} explains more about the setup and how to bundle the data. Sleeping with the BioHarness is possible when laying on the back. Sleeping on the left side is not comfortable. The tool QUICKIE is used to visualize the data and to find the correlations. QUICKY stands for Quick User Interface for Convolution Kernel-Involving Experiments and is being made and used by the Data Minig Group of Liacs, but is not yet published.
@@ -64,7 +64,7 @@
 
 			\end{figure}
 
-			The lines in Figure~\ref{fig:vsbr} are different. The correlation is 0.12. When moving average (width 10) is used the correlation is still 0.71. There is something wrong or the devices are measuring something else. The correlation of the standardized values is 0.26. 
+			The lines in Figure~\ref{fig:vsbr} are different. The correlation is 0.12. When moving average (width 10) is used the correlation is still 0.71. There is something wrong or the devices are measuring something else. The correlation of the normalised values is 0.26. 
 						
 			\begin{figure}[h]
 				\centering
@@ -74,7 +74,7 @@
 				\label{fig:vsactivity}
 
 			\end{figure}
-			The Beddit actigram and the BioHarness activity are something different, so standardization is used. Figure~\ref{fig:vsactivity} shows some similarities, but the correlation is still low (0.26). Moving average doesn not help to improve the correlation.
+			The Beddit actigram and the BioHarness activity are something different, so normalisation is used. Figure~\ref{fig:vsactivity} shows some similarities, but the correlation is still low (0.26). Moving average doesn not help to improve the correlation.
 
 			The heart rates of the Bioharness and the Beddit could be merged to one variable. The BioHarness breath rate and the Beddit respiration rate is totally different. The lines of the activity are a bit like each other, but the correlation of the activity is low and by far not good enough to merge them into one variable.
 
@@ -85,7 +85,7 @@
 		\paragraph{BioHarness}
 			When I wake up, I start my PC and the BioHarness Log Downloader. After about 40 minutes I have took a shower and had breakfast, the Log Downloader is ready. I put the strap on my chest with the device and turn it on. After sport I take a shower and put it off and after shower again on. The device is water resistance up to one meter, but it takes a while for the strap to get dry. Right before I go to bed I connect the device to the PC so it is recharged again the next day. A few minutes of data are missed every day, because of the Log Downloader and the showering. 
 		\paragraph{Openbeacon}
-			In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were wearing also a tag. If there was an edge between my tag and the tag dining room, my location was the dining room for example. The OpenBeacon was always on, but the script to capture the JSON output and storage it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was stopped and when I came back home I started the script right away. There are a few minutes missing data every day. For example, I am late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag etc, without wearing my tag, because the script was not running. Of course the script is stopped before going to bed.
+			In the experiment the OpenBeacon is used as a localization tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were wearing also a tag. If there was an edge between my tag and the tag dining room, my location was the dining room for example. The OpenBeacon was always on, but the script to capture the JSON output and storage it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was stopped and when I came back home I started the script right away. There are a few minutes missing data every day. For example, I am late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag et cetera, without wearing my tag, because the script was not running. Of course the script is stopped before going to bed.
 			
 			A few locations were I was at a certain time are known, but more locations could be extracted with some tricks. See Figure~\ref{fig:decisiontree} for the decision tree.
 
@@ -96,12 +96,14 @@
 				\end{figure}
 
 				Strange enough some tags were showing up which were not part of the tags of the OpenBeacon. These tags were ignored.
-
+		
+		\clearpage
 		\input{histogram}
 				
 	\subsection{Preprocessing}
 		\label{sec:preprocessing}
 		\subsubsection{From raw to a dataset}
+			\label{sec:rawdataset}
 			In this phase all the data is used and combined to have one structed dataset after the phase. The end result is a csv file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The dataset begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
 			
 			%\input{pseudocode}
@@ -112,6 +114,7 @@
 			\[ 
 				\left(
 				\begin{array}{rc}
+				Timestamp & Location \\ \hline
 				1 & Away \\
 				4 & Wake \\
 				6 & Light sleep \\
@@ -124,6 +127,7 @@
 				\to
 				\left(
 				\begin{array}{rc}
+				Timestamp & Location \\ \hline
 				1 & Away \\
 				2 & Away \\
 				3 & way \\
@@ -159,6 +163,7 @@
 			\[ 
 				\left(
 				\begin{array}{rr}
+				T & HR \\ \hline
 				1 & 40 \\
 				5 & 50 \\
 				6 & 52 \\
@@ -168,6 +173,7 @@
 				\to
 				\left(
 				\begin{array}{rl}
+				Timestamp & Heart rate \\ \hline
 				1 & 40 \\
 				2 & 42.5 \\
 				3 & 45 \\
