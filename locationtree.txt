@@ -1,24 +1,24 @@
 === Run information ===
 
-Scheme:weka.classifiers.trees.J48 -C 0.25 -M 10000
-Relation:  self-tracking
-Instances:    585195
+Scheme:weka.classifiers.trees.J48 -C 0.25 -M 1000
+Relation:     self-tracking
+Instances:    584619
 Attributes:   15
-        bioharness.hr
-        bioharness.br
-        bioharness.activity
-        bioharness.acceleration
-        bioharness.posture
-        bioharness.BRAmplitude
-        bioharness.ECGAmplitude
-        bioharness.ECGNoise
-        bioharness.XMin
-        bioharness.XPeak
-        bioharness.YMin
-        bioharness.YPeak
-        bioharness.ZMin
-        bioharness.ZPeak
-        location
+              hr
+              br
+              activity
+              acceleration
+              posture
+              BRAmplitude
+              ECGAmplitude
+              ECGNoise
+              XMin
+              XPeak
+              YMin
+              YPeak
+              ZMin
+              ZPeak
+              location
 Test mode:split 66.0% train, remainder test
 
 === Classifier model (full training set) ===
@@ -26,87 +26,276 @@ Test mode:split 66.0% train, remainder test
 J48 pruned tree
 ------------------
 
-bioharness.ZMin <= 0.2
-| bioharness.hr <= 76
-| | bioharness.ECGNoise <= 0.00038
-| | |  ioharness.XPeak <= -0.91
-| | | | bioharness.YPeak <= 0.14: out (38661.0/10391.0)
-| | | | bioharness.YPeak > 0.14: bedroom (10145.0/2478.0)
-| | | bioharness.XPeak > -0.91
-| | | | bioharness.XPeak <= -0.55
-| | | | | bioharness.YMin <= 0.38
-| | | | | | bioharness.XMin <= -0.95
-| | | | | | | bioharness.YPeak <= 0.02: out (18344.0/7964.0)
-| | | | | | | bioharness.YPeak > 0.02: bedroom (10420.0/4330.0)
-| | | | | | bioharness.XMin > -0.95
-| | | | | | | bioharness.YPeak <= 0.24: bedroom (83213.0/27102.0)
-| | | | | | | bioharness.YPeak > 0.24
-| | | | | | | | bioharness.ECGAmplitude <= 0.006544: out (11589.0/3496.0)
-| | | | | | | | bioharness.ECGAmplitude > 0.006544: bedroom (10518.0/5271.0)
-| | | | | bioharness.YMin > 0.38: bedroom (13440.0/1950.0)
-| | | | bioharness.XPeak > -0.55: out (19106.0/9006.0)
-| | bioharness.ECGNoise > 0.00038
-| | | bioharness.br <= 18.9
-| | | | bioharness.XPeak <= -0.89: out (24825.0/7452.0)
-| | | | bioharness.XPeak > -0.89
-| | | | | bioharness.XPeak <= -0.48
-| | | | | | bioharness.ECGNoise <= 0.00252
-| | | | | | | bioharness.ECGAmplitude <= 0.006284: out (16642.0/5935.0)
-| | | | | | | bioharness.ECGAmplitude > 0.006284: bedroom (18015.0/9636.0)
-| | | | | | bioharness.ECGNoise > 0.00252: out (17358.0/8403.0)
-| | | | | bioharness.XPeak > -0.48: out (12814.0/5855.0)
-| | | bioharness.br > 18.9: out (27675.0/6654.0)
-| bioharness.hr > 76: out (177488.0/28576.0)
-bioharness.ZMin > 0.2
-| bioharness.ZPeak <= 0.71: bedroom (64809.0/14869.0)
-| bioharness.ZPeak > 0.71: rest.of.the.house (10133.0/5283.0)
+ZMin <= 0.2
+| hr <= 76
+| | ECGNoise <= 0.00038
+| | | XPeak <= -0.91
+| | | | YMin <= 0.15
+| | | | | ZMin <= -0.12
+| | | | | | hr <= 55
+| | | | | | | ZMin <= -0.16
+| | | | | | | | ECGNoise <= 0.00014: out (1033.0/465.0)
+| | | | | | | | ECGNoise > 0.00014: bedroom (3476.0/1421.0)
+| | | | | | | ZMin > -0.16: out (2877.0/950.0)
+| | | | | | hr > 55: out (12380.0/3873.0)
+| | | | | ZMin > -0.12: out (20681.0/3495.0)
+| | | | YMin > 0.15: bedroom (8342.0/1098.0)
+| | | XPeak > -0.91
+| | | | XPeak <= -0.55
+| | | | | YMin <= 0.38
+| | | | | | ECGAmplitude <= 0.007764
+| | | | | | | BRAmplitude <= 36
+| | | | | | | | ECGAmplitude <= 0.004804: out (2055.0/493.0)
+| | | | | | | | ECGAmplitude > 0.004804
+| | | | | | | | | hr <= 59
+| | | | | | | | | | XPeak <= -0.84
+| | | | | | | | | | | YMin <= -0.06
+| | | | | | | | | | | | ECGNoise <= 0.00014: out (1147.0/397.0)
+| | | | | | | | | | | | ECGNoise > 0.00014
+| | | | | | | | | | | | | hr <= 52: bedroom (1048.0/259.0)
+| | | | | | | | | | | | | hr > 52: out (1182.0/589.0)
+| | | | | | | | | | | YMin > -0.06: bedroom (2088.0/184.0)
+| | | | | | | | | | XPeak > -0.84: bedroom (18068.0/4166.0)
+| | | | | | | | | hr > 59
+| | | | | | | | | | BRAmplitude <= 18: out (1123.0/156.0)
+| | | | | | | | | | BRAmplitude > 18
+| | | | | | | | | | | YMin <= 0.03
+| | | | | | | | | | | | posture <= 22: out (1218.0/348.0)
+| | | | | | | | | | | | posture > 22
+| | | | | | | | | | | | | ECGAmplitude <= 0.006924: bedroom (1121.0/385.0)
+| | | | | | | | | | | | | ECGAmplitude > 0.006924: out (1393.0/718.0)
+| | | | | | | | | | | YMin > 0.03: bedroom (1801.0/648.0)
+| | | | | | | BRAmplitude > 36
+| | | | | | | | YMin <= 0.21
+| | | | | | | | | XMin <= -0.93
+| | | | | | | | | | ZMin <= 0.14
+| | | | | | | | | | | ZMin <= -0.15
+| | | | | | | | | | | | br <= 20.1
+| | | | | | | | | | | | | acceleration <= 0.14
+| | | | | | | | | | | | | | XMin <= -0.97: out (1153.0/494.0)
+| | | | | | | | | | | | | | XMin > -0.97
+| | | | | | | | | | | | | | | hr <= 57: out (1539.0/598.0)
+| | | | | | | | | | | | | | | hr > 57: bedroom (1874.0/1016.0)
+| | | | | | | | | | | | | acceleration > 0.14
+| | | | | | | | | | | | | | YMin <= -0.16: bedroom (1051.0/524.0)
+| | | | | | | | | | | | | | YMin > -0.16: out (1275.0/712.0)
+| | | | | | | | | | | | br > 20.1: out (1009.0/319.0)
+| | | | | | | | | | | ZMin > -0.15: out (3977.0/1057.0)
+| | | | | | | | | | ZMin > 0.14: bedroom (1355.0/556.0)
+| | | | | | | | | XMin > -0.93
+| | | | | | | | | | YMin <= -0.15: bedroom (8815.0/2214.0)
+| | | | | | | | | | YMin > -0.15
+| | | | | | | | | | | posture <= 44
+| | | | | | | | | | | | br <= 15.3
+| | | | | | | | | | | | | hr <= 56
+| | | | | | | | | | | | | | XMin <= -0.84: out (1029.0/406.0)
+| | | | | | | | | | | | | | XMin > -0.84: bedroom (1046.0/552.0)
+| | | | | | | | | | | | | hr > 56
+| | | | | | | | | | | | | | BRAmplitude <= 62: rest.of.the.house (1673.0/1200.0)
+| | | | | | | | | | | | | | BRAmplitude > 62: bedroom (1113.0/706.0)
+| | | | | | | | | | | | br > 15.3: bedroom (7205.0/3155.0)
+| | | | | | | | | | | posture > 44: bedroom (1933.0/468.0)
+| | | | | | | | YMin > 0.21
+| | | | | | | | | ZMin <= -0.33: out (13322.0/4156.0)
+| | | | | | | | | ZMin > -0.33: bedroom (1230.0/67.0)
+| | | | | | ECGAmplitude > 0.007764
+| | | | | | | posture <= -24: living.room (1386.0/752.0)
+| | | | | | | posture > -24
+| | | | | | | | posture <= 21
+| | | | | | | | | ZPeak <= -0.08
+| | | | | | | | | | hr <= 55: bedroom (1156.0/442.0)
+| | | | | | | | | | hr > 55: out (2365.0/674.0)
+| | | | | | | | | ZPeak > -0.08: bedroom (1044.0/629.0)
+| | | | | | | | posture > 21
+| | | | | | | | | BRAmplitude <= 23
+| | | | | | | | | | ZMin <= -0.65
+| | | | | | | | | | | hr <= 54
+| | | | | | | | | | | | ECGAmplitude <= 0.008904: bedroom (1437.0/548.0)
+| | | | | | | | | | | | ECGAmplitude > 0.008904: out (1741.0/789.0)
+| | | | | | | | | | | hr > 54: bedroom (1157.0/652.0)
+| | | | | | | | | | ZMin > -0.65: bedroom (6882.0/1709.0)
+| | | | | | | | | BRAmplitude > 23: bedroom (34053.0/9614.0)
+| | | | | YMin > 0.38
+| | | | | | ZMin <= -0.49: out (1289.0/576.0)
+| | | | | | ZMin > -0.49: bedroom (12151.0/942.0)
+| | | | XPeak > -0.55
+| | | | | YPeak <= 0.2
+| | | | | | BRAmplitude <= 29
+| | | | | | | ECGNoise <= 0.0002: bedroom (1085.0/533.0)
+| | | | | | | ECGNoise > 0.0002: out (3235.0/995.0)
+| | | | | | BRAmplitude > 29
+| | | | | | | hr <= 58: bedroom (2617.0/633.0)
+| | | | | | | hr > 58: out (1401.0/711.0)
+| | | | | YPeak > 0.2
+| | | | | | BRAmplitude <= 33
+| | | | | | | hr <= 52: out (1111.0/361.0)
+| | | | | | | hr > 52: rest.of.the.house (1570.0/867.0)
+| | | | | | BRAmplitude > 33
+| | | | | | | br <= 14.8
+| | | | | | | | XPeak <= -0.39: rest.of.the.house (1879.0/781.0)
+| | | | | | | | XPeak > -0.39: out (1061.0/365.0)
+| | | | | | | br > 14.8: out (5078.0/1098.0)
+| | ECGNoise > 0.00038
+| | | posture <= -18
+| | | | posture <= -27: bedroom (1436.0/485.0)
+| | | | posture > -27
+| | | | | YPeak <= -0.16: out (2406.0/679.0)
+| | | | | YPeak > -0.16: bedroom (1590.0/335.0)
+| | | posture > -18
+| | | | ECGAmplitude <= 0.005224: out (28147.0/6249.0)
+| | | | ECGAmplitude > 0.005224
+| | | | | br <= 18.2
+| | | | | | XPeak <= -0.89
+| | | | | | | YMin <= -0.02: out (12554.0/3919.0)
+| | | | | | | YMin > -0.02
+| | | | | | | | YMin <= 0.04: out (1071.0/517.0)
+| | | | | | | | YMin > 0.04: bedroom (1014.0/558.0)
+| | | | | | XPeak > -0.89
+| | | | | | | posture <= 57
+| | | | | | | | ECGNoise <= 0.00174
+| | | | | | | | | ECGAmplitude <= 0.006304
+| | | | | | | | | | YPeak <= 0.26
+| | | | | | | | | | | XMin <= -0.89: out (1893.0/951.0)
+| | | | | | | | | | | XMin > -0.89: bedroom (1423.0/736.0)
+| | | | | | | | | | YPeak > 0.26: out (4057.0/1240.0)
+| | | | | | | | | ECGAmplitude > 0.006304
+| | | | | | | | | | YPeak <= 0.28
+| | | | | | | | | | | ZPeak <= -0.32
+| | | | | | | | | | | | ZMin <= -0.77: out (1098.0/485.0)
+| | | | | | | | | | | | ZMin > -0.77: bedroom (7000.0/3016.0)
+| | | | | | | | | | | ZPeak > -0.32
+| | | | | | | | | | | | ZPeak <= -0.14: out (2533.0/1020.0)
+| | | | | | | | | | | | ZPeak > -0.14
+| | | | | | | | | | | | | BRAmplitude <= 79: out (1477.0/827.0)
+| | | | | | | | | | | | | BRAmplitude > 79: bedroom (1033.0/583.0)
+| | | | | | | | | | YPeak > 0.28
+| | | | | | | | | | | XPeak <= -0.66: bedroom (1518.0/611.0)
+| | | | | | | | | | | XPeak > -0.66: out (1079.0/586.0)
+| | | | | | | | ECGNoise > 0.00174
+| | | | | | | | | YMin <= -0.15
+| | | | | | | | | | activity <= 0.18: out (5126.0/2417.0)
+| | | | | | | | | | activity > 0.18
+| | | | | | | | | | | BRAmplitude <= 77: out (1729.0/983.0)
+| | | | | | | | | | | BRAmplitude > 77: rest.of.the.house (2273.0/1420.0)
+| | | | | | | | | YMin > -0.15
+| | | | | | | | | | BRAmplitude <= 55: bedroom (2575.0/1480.0)
+| | | | | | | | | | BRAmplitude > 55: out (4676.0/2039.0)
+| | | | | | | posture > 57
+| | | | | | | | ZMin <= -0.75
+| | | | | | | | | posture <= 76: out (3273.0/979.0)
+| | | | | | | | | posture > 76: rest.of.the.house (1010.0/553.0)
+| | | | | | | | ZMin > -0.75: rest.of.the.house (1109.0/485.0)
+| | | | | br > 18.2
+| | | | | | ECGAmplitude <= 0.009024
+| | | | | | | posture <= 18: out (9145.0/2127.0)
+| | | | | | | posture > 18
+| | | | | | | | XPeak <= -0.57
+| | | | | | | | | br <= 21.7
+| | | | | | | | | | hr <= 56: bedroom (1376.0/614.0)
+| | | | | | | | | | hr > 56: out (2913.0/1339.0)
+| | | | | | | | | br > 21.7: out (1105.0/454.0)
+| | | | | | | | XPeak > -0.57: out (3814.0/1090.0)
+| | | | | | ECGAmplitude > 0.009024: out (5738.0/872.0)
+| hr > 76
+| | hr <= 142
+| | | posture <= 8
+| | | | ZPeak <= 0.4
+| | | | | ECGAmplitude <= 0.006264: out (4731.0/1105.0)
+| | | | | ECGAmplitude > 0.006264
+| | | | | | ZPeak <= 0.08: out (1028.0/356.0)
+| | | | | | ZPeak > 0.08: rest.of.the.house (1697.0/1013.0)
+| | | | ZPeak > 0.4: rest.of.the.house (1089.0/489.0)
+| | | posture > 8: out (125526.0/23531.0)
+| | hr > 142: out (43088.0/1065.0)
+ZMin > 0.2
+| ZMin <= 0.8
+| | YMin <= 0.28
+| | | hr <= 62
+| | | | posture <= -28
+| | | | | ECGAmplitude <= 0.007864
+| | | | | | ZMin <= 0.62
+| | | | | | | ECGAmplitude <= 0.005244
+| | | | | | | | posture <= -49: bedroom (2192.0/36.0)
+| | | | | | | | posture > -49
+| | | | | | | | | ZPeak <= 0.34: bedroom (1681.0/200.0)
+| | | | | | | | | ZPeak > 0.34
+| | | | | | | | | | ECGNoise <= 0.00016
+| | | | | | | | | | | BRAmplitude <= 38: rest.of.the.house (1023.0/343.0)
+| | | | | | | | | | | BRAmplitude > 38: living.room (1270.0/682.0)
+| | | | | | | | | | ECGNoise > 0.00016: bedroom (1090.0/415.0)
+| | | | | | | ECGAmplitude > 0.005244: bedroom (21125.0/2963.0)
+| | | | | | ZMin > 0.62
+| | | | | | | YMin <= 0.08
+| | | | | | | | ECGNoise <= 0.00012: rest.of.the.house (1078.0/442.0)
+| | | | | | | | ECGNoise > 0.00012: bedroom (1092.0/439.0)
+| | | | | | | YMin > 0.08: bedroom (1002.0/55.0)
+| | | | | ECGAmplitude > 0.007864: rest.of.the.house (1597.0/935.0)
+| | | | posture > -28
+| | | | | posture <= -18
+| | | | | | ECGAmplitude <= 0.005024
+| | | | | | | ECGNoise <= 0.00026: bedroom (2171.0/377.0)
+| | | | | | | ECGNoise > 0.00026: out (1075.0/359.0)
+| | | | | | ECGAmplitude > 0.005024: bedroom (21854.0/2103.0)
+| | | | | posture > -18
+| | | | | | YMin <= -0.16: out (1034.0/445.0)
+| | | | | | YMin > -0.16: bedroom (1348.0/605.0)
+| | | hr > 62
+| | | | ZMin <= 0.61
+| | | | | activity <= 0.06
+| | | | | | ZMin <= 0.26
+| | | | | | | BRAmplitude <= 78: out (1842.0/845.0)
+| | | | | | | BRAmplitude > 78: bedroom (1197.0/412.0)
+| | | | | | ZMin > 0.26: bedroom (2312.0/593.0)
+| | | | | activity > 0.06: bedroom (1064.0/621.0)
+| | | | ZMin > 0.61: out (1189.0/194.0)
+| | YMin > 0.28
+| | | ECGNoise <= 0.0001: rest.of.the.house (1508.0/684.0)
+| | | ECGNoise > 0.0001: bedroom (1063.0/421.0)
+| ZMin > 0.8: rest.of.the.house (4132.0/1086.0)
 
-Number of Leaves  : 	18
+Number of Leaves  : 	114
 
-Size of the tree : 	35
+Size of the tree : 	227
 
 
-Time taken to build model: 26799.5 seconds
+Time taken to build model: 23249.86 seconds
 
 === Evaluation on test split ===
 === Summary ===
 
-Correctly Classified Instances   139991      70.3593 %
-Incorrectly Classified Instances  58975      29.6407 %
-Kappa statistic         0.4574
-Mean absolute error        0.0887
-Root mean squared error       0.2107
-Relative absolute error    73.3055 %
-Root relative squared error   85.5952 %
-Total Number of Instances     198966  
+Correctly Classified Instances      147957               74.4363 %
+Incorrectly Classified Instances     50813               25.5637 %
+Kappa statistic                          0.5404
+Mean absolute error                      0.0853
+Root mean squared error                  0.2067
+Relative absolute error                 63.5111 %
+Root relative squared error             79.7501 %
+Total Number of Instances           198770     
 
 === Detailed Accuracy By Class ===
 
-               TP Rate   	           Recall  	     ROC Area
-	                     FP Rate Precision     F-Measure     Class
-               0.89   0.374   0.723  0.89   0.798  0.828  out
-               0      0       0      0      0      0.755  dining.room
-               0      0       0      0      0      0.741  toilet.ground.floor
-               0      0       0      0      0      0.746  kitchen
-               0      0       0      0      0      0.839  living.room
-               0      0       0      0      0      0.769  hall.first.floor
-               0      0       0      0      0      0.78   toilet.first.floor
-               0      0       0      0      0      0.598  rest.of.the.house
-               0.723  0.176   0.669  0.723  0.695  0.836  bedroom
-               0      0       0      0      0      0.782  bed
-Weighted Avg.  0.704  0.253   0.598  0.704  0.646  0.804
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.908     0.325      0.755     0.908     0.825      0.871    out
+                 0         0          0         0         0          0.821    dining.room
+                 0         0          0         0         0          0.852    toilet.ground.floor
+                 0         0          0         0         0          0.831    kitchen
+                 0.067     0.002      0.368     0.067     0.114      0.91     living.room
+                 0         0          0         0         0          0.841    hall.first.floor
+                 0         0          0         0         0          0.819    toilet.first.floor
+                 0.167     0.019      0.517     0.167     0.252      0.711    rest.of.the.house
+                 0.757     0.123      0.751     0.757     0.754      0.889    bedroom
+Weighted Avg.    0.744     0.213      0.704     0.744     0.709      0.859
 
 === Confusion Matrix ===
 
-  a  b  c  d  e  f  g  h  i     j   <-- classified as
- 92510  0  0  0  0  0  0  0 11401  0 |  a = out
-  1101  0  0  0  0  0  0  0  1208  0 |  b = dining.room
-   679  0  0  0  0  0  0  0   357  0 |  c = toilet.ground.floor
-   392  0  0  0  0  0  0  0    42  0 |  d = kitchen
-   458  0  0  0  0  0  0  0  2248  0 |  e = living.room
-   661  0  0  0  0  0  0  0    38  0 |  f = hall.first.floor
-   280  0  0  0  0  0  0  0    36  0 |  g = toilet.first.floor
- 13583  0  0  0  0  0  0  0  8121  0 |  h = rest.of.the.house
- 18189  0  0  0  0  0  0  0 47481  0 |  i = bedroom
-   181  0  0  0  0  0  0  0     0  0 |  j = bed
+     a  b  c  d    e  f  g     h     i   <-- classified as
+ 94681  0  0  0   47  0  0   951  8556 |     a = out
+  1126  0  0  0    0  0  0    59  1129 |     b = dining.room
+   660  0  0  0    0  0  0    22   347 |     c = toilet.ground.floor
+   368  0  0  0    0  0  0     6    42 |     d = kitchen
+   509  0  0  0  182  0  0  1094   916 |     e = living.room
+   541  0  0  0    0  0  0   119    45 |     f = hall.first.floor
+   293  0  0  0    0  0  0    42    35 |     g = toilet.first.floor
+ 12505  0  0  0  134  0  0  3599  5367 |     h = rest.of.the.house
+ 14698  0  0  0  131  0  0  1071 49495 |     i = bedroom
 

@@ -9,13 +9,16 @@
 			Breath rate is derived from the breath sensor. The sampling frequency of the general log is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
 		\label{sec:datadescriptionbeddit}
-		The data from the sensors is being transferred via Wi-Fi or cable to the web servers of Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration (Beddit uses the term respiration for breathing) and the activity from the BCG. When all data is received of the night, the servers are going to analyze it and will compute the sleep stages, sleep efficiency (time sleeping relative to time in bed), average heart rata, average noise level and stress level. The stages are ``Away'', ``Wake'', ``Light sleep'', ``Deep sleep'', ``REM''\footnote{REM stands for Rapid Eye Movements, it's a very light sleep and dreaming is possible in this stage.} and ``Missing''. How Beddit computed these stages is not explained, but they probably use the heart rate and the binary actigram. Beddit does not use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04 \cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
+		The data from the sensors is being transferred via Wi-Fi or cable to the web servers of Beddit, almost realtime. The servers are analyzing the data and extracting the heart rate, respiration (Beddit uses the term respiration for breathing) and the activity from the BCG. When all data is received of the night, the servers are going to analyze it and will compute the sleep stages, sleep efficiency (time sleeping relative to time in bed), average heart rata, average noise level and stress level. The stages are \emph{Away}, \emph{Wake}, \emph{Light sleep}, \emph{Deep sleep}, \emph{REM}\footnote{REM stands for Rapid Eye Movements, it's a very light sleep and dreaming is possible in this stage.} and \emph{Missing}. How Beddit computed these stages is not explained, but they probably use the heart rate and the binary actigram. Beddit does not use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04 \cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
 
 		\subsubsection{OpenBeacon}
-			Open OpenBeacon produces produces JSON and it is stored in MongoDB database. MongoDB is a NoSQL database, which is the counterpart of a relational database. One argument to use it is because the format of the data is more flexible. The collections of the database can be exported as csv files.
+			Open OpenBeacon produces produces JSON and it is stored in MongoDB database. MongoDB is a NoSQL database, which is the counterpart of a relational database. One argument to use it is because the format of the data is more flexible. The collections of the database can be exported as CSV files.
 			There are two collections. The collection tags, within documents with the format tag ID, timestamp (seconds since the Unix epoch\footnote{00:00:00 GMT January 1, 1970.}). For every second the OpenBeacon sees a tag, a document will be added.
 			The second collection called edges. For every second the OpenBeacon sees an edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
-			The higher the power level the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency. - Reference to location histogram
+			The higher the power level the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency. Figure~\ref{fig:histogram} is a histogram of the locations, with the relative time at the locations. Bed, bedroom and out of the house are the three locations I spend most of my time. 
+
+			\input{histogram}
+
 	\subsection{Beddit versus BioHarness}
 		\label{sec:bvsb}
 		\subsubsection{Comparison}
@@ -37,7 +40,7 @@
 				\begin{equation*}
 					y'_i = \frac{ y_i - \bar{y} } { \mu }
 				\end{equation*}
-				\caption{Z-normalisation \cite{statistics}}
+				\caption{Z-normalisation \cite{statistics}.}
 			\end{figure}
 
 			Both devices were used for one night. The sampling frequency is \SI{16.67}{\milli\hertz} (every one minute). Minutes with missing data are removed. Section \ref{sec:datacollection} explains more about the setup and how to bundle the data. Sleeping with the BioHarness is possible when laying on the back. Sleeping on the left side is not comfortable. The tool QUICKIE is used to visualize the data and to find the correlations. QUICKY stands for Quick User Interface for Convolution Kernel-Involving Experiments and is being made and used by the Data Minig Group of Liacs, but is not yet published.
@@ -47,8 +50,7 @@
 			\begin{figure}[h]
 				\centering
 					\includegraphics[scale=0.5]{avgbiovsavgbeddit.png}
-					
-				\caption{Part of the plot of the heart rate. On the y-axis the heart rate and on the x-axis the amount of minutes after the start of the session.}
+					\caption{Part of the plot of the heart rate. On the y-axis the heart rate and on the x-axis the amount of minutes after the start of the session.}
 				\label{fig:avgbiovsavgbeddit}
 
 			\end{figure}
@@ -91,14 +93,13 @@
 
 				\begin{figure}[h!]
 					\input{decisiontree}
-					\caption{A decision tree how to find more locations}
+					\caption{A decision tree how to find more locations.}
 					\label{fig:decisiontree}
 				\end{figure}
 
 				Strange enough some tags were showing up which were not part of the tags of the OpenBeacon. These tags were ignored.
 		
 		\clearpage
-		\input{histogram}
 				
 	\subsection{Preprocessing}
 		\label{sec:preprocessing}
@@ -114,7 +115,7 @@
 			\[ 
 				\left(
 				\begin{array}{rc}
-				Timestamp & Location \\ \hline
+				T & Stage \\ \hline
 				1 & Away \\
 				4 & Wake \\
 				6 & Light sleep \\
@@ -127,7 +128,7 @@
 				\to
 				\left(
 				\begin{array}{rc}
-				Timestamp & Location \\ \hline
+				T & Stage \\ \hline
 				1 & Away \\
 				2 & Away \\
 				3 & way \\
@@ -144,7 +145,7 @@
 				\end{array}
 				\right)
 			\] 
-			\caption{How the missing values are filled in of the sleep stages}
+			\caption{How the missing values are filled in of the sleep stages.}
 			\label{fig:missingvalues}
 		\end{figure}
 		
@@ -157,6 +158,7 @@
 			%Openbeacon is 4Hz and can easily converted to 1Hz.
 			%Beddit is difficult, some attributes are received once per 5 minutes and some attributes are between 4 and 15 seconds, not constant at all. Format of time sometimes seconds after interval\_start and sometime datetime.
 		\subsubsection{Extend the dataset}
+			\label{sec:extendeddataset}
 			This section gives an example how the missing values can be filled in.	The Beddit heart rate gaps are filled in as seen in Figure~\ref{fig:lin} with linear interpolation. The Beddit heart rate and the BioHarness heart rate are now merged into one variable. There are still missing values in this merged variable and they are also filled in with linear interpolation.
 
 			\begin{figure}[h!]
@@ -173,7 +175,7 @@
 				\to
 				\left(
 				\begin{array}{rl}
-				Timestamp & Heart rate \\ \hline
+				T & HR \\ \hline
 				1 & 40 \\
 				2 & 42.5 \\
 				3 & 45 \\
@@ -187,7 +189,7 @@
 				\end{array}
 				\right)
 			\] 
-			\caption{Linear interpolation to fill in the missing values of the heart rates}
+			\caption{Linear interpolation to fill in the missing values of the heart rates.}
 			\label{fig:lin}
 		\end{figure}
 		
