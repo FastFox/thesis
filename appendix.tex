@@ -10,33 +10,97 @@
 		\lstinputlisting{locationtree.txt}
 
 	\section{Data attributes}
-		- The attributes available
 		\subsection{Original}
-			\subsubsection{BioHarness}
-			\begin{tabular}{l}
-				Timestamp \\
-				Heart rate \\
-				Breath rate \\
-				Posture \\
-				Activity \\
-				Acceleration \\
-				Battery \\
-				Breath rate amplitude \\
-				ECG amplitude \\
-				ECG noise \\
-				XMin \\
-				XPeak \\
-				YMin \\
-				YPeak \\
-				ZMin \\
-				ZPeak \\
+			\begin{tabular}{lll}
+				BioHarness & Beddit & OpenBeacon \\ \hline
+				Timestamp & Stress percent & Time\\ 
+				Heart rate & Time in bed & Tag A\\
+				Breath rate & Time light sleep & Tag B\\
+				Posture & Time sleeping & Power level\\
+				Activity & Time deep sleep\\
+				Acceleration & Sleep efficiency\\
+				Battery & Resting heartrate\\
+				Breath rate amplitude & Minutely actigram\\
+				ECG amplitude & Noise\\
+				ECG noise & Luminosity\\
+				XMin & Temperature\\
+				XPeak & Sleep stage\\
+				YMin & Respiration\\
+				YPeak & Presence\\
+				ZMin & Instant heart rate\\
+				ZPeak & Binary actigram\\
 			\end{tabular}
-			\subsubsection{Beddit}
-			\subsubsection{OpenBeacon}
 		\subsection{Raw Dataset}
+			\begin{tabular}{l}
+				Timestamp\\
+				Out\\
+				Dining room\\
+				Toilet ground floor\\
+				Kitchen\\
+				Living room\\
+				Hall first floor\\
+				Toilet first floor\\
+				Rest of the house\\
+				Bedroom\\
+				Bed\\
+				Beddit respiration\\
+				Beddit respiration minToMin\\
+				Beddit respiration maxToMax\\
+				Beddit respiration amplitude\\
+				Beddit instant heart rate\\
+				Beddit sleep stage\\
+				Beddit noise\\
+				Beddit luminosity\\
+				Beddit temperature\\
+				Beddit minutely actigram\\
+				BioHarness heart rate\\
+				BioHarness breath rate\\
+				BioHarness activity\\
+				BioHarness acceleration\\
+				BioHarness posture\\
+				BioHarness breath rate amplitude\\
+				BioHarness ECG amplitude\\
+				Bioharness ECG noise\\
+				BioHarness XMin\\
+				BioHarness XPeak\\
+				BioHarness YMin\\
+				BioHarness YPeak\\
+				BioHarness ZMin\\
+				BioHarness ZPeak\\
+			\end{tabular}
 			
-		\subsection{Dataset used for the correlations analysis}
-
-			
-		
+		\subsection{Dataset used for the correlations of the Data Analysis}
+			\begin{tabular}{l}
+				Day\\
+				Heart rate average\\
+				Out\\
+				Dining room\\
+				Toilet ground floor\\
+				Kitchen\\
+				Living room\\
+				Hall first floor\\
+				Toilet first floor\\
+				Rest of the house\\
+				Bedroom\\
+				Bed\\
+				In Bed\\
+				Out Bed \\
+				In bed difference\\
+				Out bed difference\\
+				Stage A\\
+				Stage W\\
+				Stage L\\
+				Stage D\\
+				Stage R\\
+				Stress percent\\
+				Time in bed\\
+				Time light sleep\\
+				Time sleeping\\
+				Time deep sleep\\
+				Resting heart rate\\
+				Noise average\\
+				Luminosity average\\
+				Temperature average\\
+				Sleep efficiency
+			\end{tabular}
 \end{appendices}
