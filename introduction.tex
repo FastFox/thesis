@@ -6,11 +6,22 @@
 		\label{seq:motivation}
 		Actions have consequences and some are clear for us humans and others are not. When something is happening directly after the action and it is consistent, it is easy recognizable as cause-effect. The longer the delay between the cause and effect the less certain we are about the correlation, but we guess the causality is stronger if the pattern happens repeatedly. For example drinking coffee before sleep and laying awake in bed later. Still it is difficult to prove because all other variables that could interrupt sleep should be fixed while experimenting, which is not possible. We could use data mining to help us find causalities about sleep and actions we do during the day. It would give insight how things work and will help improve our life style and quality. In the future maybe it will be possible to explain health complains automatically.
 
-	\subsection{Problem Statement}
+	\subsection{Research Questions}
+		Which devices could be used for self-tracking? Which sensors do they have and what do they measure? How does the data look like they produce?
+		How to collect the data and bundle the data from the different devices with different sampling frequencies? How can the bundled data be used?
+		How to analyze the data? How could self-tracking develop in the future? All these questions will be answered over the paper.
+		
+		\iffalse
+		Which devices could be used for self-tracking? What do they measure?
+		How does the data look like? How to bundle the data? How to deal with different sampling frequencies.
+		How can the data be used? 
+		How can self-tracking develop in the future.
+		
 		- State of this generation of sensors
 		- Different sample frequency
 		- Analyze dataset
 		- Future
+		\fi
 
 		\iffalse
 		Self-tracking starts by setting up all the devices. The three devices ?could? have a lot of small practical problems and needs to be tackled. The raw collected data is probably far from useful. The data is formatted in different ways, with different sampling frequencies and different scales. When this is solved it's the question how to analyze the data.
@@ -44,7 +55,7 @@
 %		Try to automaticly analyze the day/night.
 
 	\subsection{Outline}
-		In the Sensors Systems section the devices are explained. How do they work, what are the applications, which sensors do they have and what sort of output they produces. In the first part of the experiments section is explained what the data means, how the data is structered and if it is possible to extract more data. In the second part there is a comparison between two sensors explained. In the third part is explained how all the data is collected from the systems. In the last part of this section the bundling of the data is explained and how to fix the additional problems. In the Feature Construction section is explained how to extract feature from the dataset to get a dataset with a different sampling frequency. In the Data Analysis section the CRSIP-DM model is explained and the data is analysed. Multiple models are made to predict the location of the subject given the physiological data of the day. Also correlations are made, which gives some trivial and some new insights. The last section is about the conclusions, how the self-tracking process could be improved and what the next steps in self-tracking could be.
+		In the Sensor Systems section the devices are explained. How do they work, what are the applications, which sensors do they have and what sort of output they produce. In the first part of the experiments section is explained what the data means, how the data is structered and if it is possible to extract more data. In the second part there is a comparison between two sensors. In the third part is explained how all the data is collected from the systems. In the last part of this section the bundling of the data is explained and how to fix the additional problems. In the Feature Construction section is explained how to extract features from the dataset to get a dataset with a different sampling frequency. In the Data Analysis section the CRSIP-DM model is explained and the data is analysed. Multiple models are made to predict the location of the subject given the physiological data of the day. Also correlations are made, which gives some trivial and some new insights. The last section is about the conclusions, how the self-tracking process could be improved and what the next steps in self-tracking could be.
 		
 	
 	\iffalse
