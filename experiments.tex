@@ -2,20 +2,20 @@
 	\subsection{Data description}
 	\label{sec:datadescription}
 		\subsubsection{BioHarness}
-		From the data produced by the sensors more data can be derived. For the experiments the general log is used, because it has the most interesting variables and a lot of preprocessing is already done. The heart rate is the amount of beats per minute and can be derived from the ECG. In the ECG graph (see Figure~\ref{fig:ecg}) a pattern is visible, also called a cycle. Each cycle is one heartbeat. 
+		From the data produced by the sensors, more data can be derived. For the experiments the general log is used, because it has the most interesting variables and a lot of preprocessing is already done. The heart rate is the number of beats per minute and can be derived from the ECG. In the ECG graph (see Figure~\ref{fig:ecg}) a pattern is visible, also called a cycle. Each cycle is one heartbeat. 
 			The accelerometer measures the acceleration magnitude. The peak acceleration is logged in the general log.
 			The activity level is derived from the accelerometer and is expressed in terms of Vector Magnitude Units (g).
-			The force and direction of the gravity is known and the BioHarness is worn at the chest, so it is possible to calculate the posture of the user. The range is 180 degrees. \SI{0}{\celsius} is vertical and \SI{180}{\celsius} is inverted.
+			The force and direction of gravity is known and the BioHarness is worn at the chest, so it is possible to calculate the posture of the user. The range is 180 degrees. \SI{0}{\degree} is vertical and \SI{180}{\degree} is inverted.
 			Breath rate is derived from the breath sensor. The sampling frequency of the general log is \SI{1}{\hertz}.
 		\subsubsection{Beddit}
 		\label{sec:datadescriptionbeddit}
-		The data from the sensors is being transferred through Wi-Fi or cable to the web servers of Beddit, almost realtime. The servers are analysing the data and extracting the heart rate, respiration (Beddit uses the term respiration for breathing) and the activity from the BCG. When all data is received of the night, the servers are going to analyse it and will compute the sleep stages, sleep efficiency (time sleeping relative to time in bed), average heart rata, average noise level and stress level. The stages are \emph{Away}, \emph{Wake}, \emph{Light sleep}, \emph{Deep sleep}, \emph{REM}\footnote{REM stands for Rapid Eye Movements, it's a very light sleep and dreaming is possible in this stage.} and \emph{Missing}. How Beddit computed these stages is not explained, but they probably use the heart rate and the binary actigram. Beddit does not use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04 \cite{iso8601}} format in locale time and their values, respectively celsius, decibel and lux.
+		The data from the sensors is being transferred through Wi-Fi or cable to the web servers of Beddit, almost realtime. The servers are analysing the data and extracts the heart rate, respiration (Beddit uses the term respiration for breathing) and the activity from the BCG. When all data is received of the night, the servers are going to analyse it and will compute the sleep stages, sleep efficiency (time sleeping relative to time in bed), average heart rata, average noise level and stress level. The stages are \emph{Away}, \emph{Wake}, \emph{Light sleep}, \emph{Deep sleep}, \emph{REM}\footnote{REM stands for Rapid Eye Movements, it's a very light sleep and dreaming is possible in this stage.} and \emph{Missing}. How Beddit computes these stages is not explained, but they probably use the heart rate and the binary actigram. Beddit does not use a constant sampling frequency. For the respiration and the instant heart rate there is a record for every beat, with the BPM computed from two single heart beats and the timestamp in seconds since the start of the session. Presence has a record for every second the presence is changing and a 0 if the user is not in bed and a 1 if the user is in bed. The binary actigram has a record for every second there is a movement above a certain threshold. The minutely actigram has for every minute a value with the amount of movements occurred. The temperature, ambient noise level and brightness have a record every 5 minutes with the date and time in ISO 8601\footnote{Example 2013-05-14T19:04 \cite{iso8601}} format in local time and their values, respectively celsius, decibel and lux.
 
 		\subsubsection{OpenBeacon}
-			The OpenBeacon produces produces JSON and it is stored in a MongoDB database. MongoDB is a NoSQL database, which is the counterpart of a relational database. One argument to use it is because the format of the data is more flexible. The collections of the database can be exported as CSV files.
+			The OpenBeacon produces JSON, that is stored in a MongoDB database. MongoDB is a NoSQL database, which is the counterpart of a relational database. One argument to use it is because the format of the data is more flexible. The collections of the database can be exported as CSV files.
 			There are two collections. The collection tags, within documents with the format tag ID, timestamp (seconds since the Unix epoch\footnote{00:00:00 GMT January 1, 1970.}). For every second the OpenBeacon sees a tag, a document will be added.
 			The second collection is called edges. For every second the OpenBeacon sees an edge between two tags, there will be one document added with the format ID of tag 1, ID of tag 2, power level and timestamp.
-			The higher the power level the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere the power level. For example walls and other communication on the \SI{2.4}{\giga\hertz} frequency. Figure~\ref{fig:histogram} is a histogram of the locations, with the relative time at the locations. Bed, bedroom and out of the house are the three locations I spend most of my time. 
+			The higher the power level, the closer the tags are from each other. The power level can not be expressed in terms of distance, because there are other things that could interfere with the power level. For example, walls and other communication on the \SI{2.4}{\giga\hertz} frequency. Figure~\ref{fig:histogram} is a histogram of the locations, with the relative time at the locations. Bed, bedroom and out of the house are the three locations I spend most of my time. 
 
 			\input{histogram}
 
@@ -23,8 +23,8 @@
 		\label{sec:bvsb}
 		\subsubsection{Comparison}
 			The first experiment is a comparison between the Beddit and the BioHarness. It is a good assignment to get to know the devices and the data. The two devices have overlapping features like the heart rate, breath rate and activity level. It would be a good test to see if they measure the same thing. 
-			Beddit does not have a constant sampling frequency. After every heartbeat the BPM is computed between the heartbeat and the previous heartbeat. The value is notated with the amount of seconds since the session. For every heartbeat, the associated minute and the heart rate is summed up with all the other heartbeat heart rates, and divided by the amount of heartbeats in the specific minute. This results in an average heart rate per minute. The respiration rate is also summed up, but does not needs to be divided, because it is the amount of breaths taken.
-			The BioHarness heart rate, breath rate and activity calculations are done the same. The difference is the Bioharness has a constant sampling frequency from \SI{1}{\hertz}. 
+			Beddit does not have a constant sampling frequency. After every heartbeat, the BPM is computed between the heartbeat and the previous heartbeat. The value is notated with the amount of seconds since the session. For every heartbeat, the associated minute and the heart rate is summed up with all the other heartbeat heart rates, and divided by the amount of heartbeats in the specific minute. This results in an average heart rate per minute. The respiration rate is also summed up, but does not need to be divided, because it is the amount of breaths taken.
+			The BioHarness heart rate, breath rate and activity calculations are done in the same way. The difference is that the Bioharness has a constant sampling frequency from \SI{1}{\hertz}. 
 			The Beddit binary actigram has already one record per minute, it just needs to be copied. It is not the same as the BioHarness activity, so it would be good to normalise\footnote{Normalisation makes it easier to compare values with different scales.} the BioHarness activity and the Beddit binary actigram.
 			\begin{figure}[h]
 				\begin{equation*}
@@ -43,7 +43,7 @@
 				\caption{Z-normalisation \cite{statistics}.}
 			\end{figure}
 
-			Both devices were used for one night. The sampling frequency is \SI{16.67}{\milli\hertz} (every one minute). Minutes with missing data are removed. Section \ref{sec:datacollection} explains more about the setup and how to bundle the data. Sleeping with the BioHarness is possible when laying on the back. Sleeping on the left side is not comfortable. The tool QUICKIE is used to visualise the data and to find the correlations. QUICKY stands for Quick User Interface for Convolution Kernel-Involving Experiments and is being made and used by the Data Minig Group of Liacs, but is not yet published.
+			Both devices were used for one night. The sampling frequency is \SI{16.67}{\milli\hertz} (every one minute). Minutes with missing data are removed. Section \ref{sec:datacollection} explains more about the setup and how to bundle the data. Sleeping with the BioHarness is possible when laying on the back. Sleeping on the left side is not comfortable. The tool QUICKIE is used to visualise the data and to find the correlations. QUICKIE stands for Quick User Interface for Convolution Kernel-Involving Experiments and is being made and used by the Data Minig Group of Liacs, but is not yet published.
 
 		\subsubsection{Results}
 			
@@ -55,7 +55,7 @@
 
 			\end{figure}
 
-			The lines in Figure~\ref{fig:avgbiovsavgbeddit} are not exactly the same, but they do have the same pattern. The correlation is 0.61. The low correlation could be explained by lag in measurements or one (or both) device(s) does not measure it correct. Moving average is a technique to smooth the lines. If width 7 is used, then it means a value on the new computed line is composed from the current and the previous 6 minutes of the old line. If moving average is applied to both lines, the correlation of the heart rates will be 0.98.\
+			The lines in Figure~\ref{fig:avgbiovsavgbeddit} are not exactly the same, but they do have the same pattern. The correlation is 0.61. The low correlation could be explained by lag in measurements or one (or both) device(s) does not measure correctly. Moving average is a technique to smooth the lines. If width 7 is used, then it means a value on the new computed line is composed from the current and the previous 6 minutes of the old line. If moving average is applied to both lines, the correlation of the heart rates will be 0.98.\
 						
 			\begin{figure}[h]
 				\centering
@@ -83,11 +83,11 @@
 	\subsection{Data collection}
 		\label{sec:datacollection}
 		\paragraph{Beddit}
-			The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring I have downloaded for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I received an email and I visited the website to see if everything is logged all right.
+			The sensor is placed on my bed and connected with the device. The device is connected to the internet. Beddit starts measuring from 21:30 till 11:00 the next day. After all the measuring, I have downloaded for every night two JSON files with the API of Beddit\cite{bedditapi}. After the computing of the data I received an email and I visited the website to see if everything is logged all right.
 		\paragraph{BioHarness}
 			When I wake up, I start my PC and the BioHarness Log Downloader. After about 40 minutes I have took a shower and had breakfast, the Log Downloader is ready. I put the strap on my chest with the device and turn it on. After sport I take a shower and put it off and after shower turn it again on. The device is water resistance up to one meter, but it takes a while for the strap to get dry. Right before I go to bed I connect the device to the PC so it is recharged again the next day. A few minutes of data are missed every day, because of the Log Downloader and the showering. 
-		\paragraph{Openbeacon}
-			In the experiment the OpenBeacon is used as a localisation tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were also wearing a tag. If there was an edge between my tag and the tag dining room, my location was the dining room for example. The OpenBeacon was always on, but the script to capture the JSON output and to store it in the MongoDB not. After waking up I started my laptop and the script. I took my tag with me, except in the shower where it was put at on a cabinet at the hall first floor. When I left the house the script was stopped and when I came back home I started the script right away. There are a few minutes missing data every day. For example, when I was late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag et cetera, without wearing my tag, because the script was not running. Of course the script is stopped before going to bed.
+		\paragraph{OpenBeacon}
+			In the experiment, the OpenBeacon is used as a localisation tool. The location of the user could explain some behaviour during the day, which can explain behaviour during the night. At first, there were two OpenBeacon devices available, one for the ground floor and one for the second floor. It covered the whole house, but unfortunately one device stopped working. The working device were set up at the ground floor and several tags at the following places: dining room, toilet ground floor, kitchen, living room, hall first floor, toilet first floor. I were also wearing a tag. If there was an edge between my tag and the tag dining room, my location was the dining room for example. The OpenBeacon was always on, but the script to capture the JSON output and to store it in the MongoDB not. After waking, up I started my laptop and the script. I took my tag with me, except in the shower where it was put on a cabinet at the hall. When I left the house the script was stopped and when I came back home I started the script right away. There are a few minutes of missing data every day. For example, when I was late back home from sport and I went to bed, but not before changing clothes, brushing teeth, unpacking my sport bag et cetera, without wearing my tag, because the script was not running. Of course the script is stopped before going to bed.
 			
 			A few locations were I was at a certain time are known, but more locations could be extracted with some tricks. See Figure~\ref{fig:decisiontree} for the decision tree.
 
@@ -97,7 +97,7 @@
 					\label{fig:decisiontree}
 				\end{figure}
 
-				Strange enough some tags were showing up which were not part of the tags of the OpenBeacon. These tags were ignored.
+				Strange enough, some tags were showing up which were not part of the tags of the OpenBeacon. These tags were ignored.
 		
 		\clearpage
 				
@@ -105,12 +105,12 @@
 		\label{sec:preprocessing}
 		\subsubsection{From raw to a dataset}
 			\label{sec:rawdataset}
-			In this phase all the data is used and combined to have one structured dataset after the phase. The end result is a CSV file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The dataset begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
+			In this phase, all the data is used and combined to have one structured dataset after the phase. The end result is a CSV file. The sampling frequency is \SI{1}{\hertz}, which means for every second a row. The dataset begins at Wed 10 Apr 2013 08:43:01 AM CEST GMT+2 and ends at Thu 25 Apr 2013 08:52:35 AM CEST GMT+2. 
 			
 			%\input{pseudocode}
 
 			Most of the code is loops and more loops, calculating the right timestamp and copy data. 
-			The Beddit API only give records of the sleep stage and timestamp, when the stage is changing. The gaps with missing values are filled in. See Figure~\ref{fig:missingvalues}. There are still a lot of missing values. For example the heart rate at night. It is possible to use methods to fill in the gaps, but it is better to provide a ``raw'' dataset, with only the facts. When anyone would like to use the data, they can decide themselves the method or solution.
+			The Beddit API only gives records of the sleep stage and timestamp, when the stage is changing. The gaps with missing values are filled in. See Figure~\ref{fig:missingvalues}. There are still a lot of missing values, for example the heart rate at night. It is possible to use methods to fill in the gaps, but it is better to provide a ``raw'' dataset, with only the facts. When anyone else would like to use the data, they can decide themselves the method or solution.
 			\begin{figure}[h!]
 			\[ 
 				\left(
